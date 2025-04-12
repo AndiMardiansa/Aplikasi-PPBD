@@ -5,9 +5,9 @@
       <!-- Column 1 - About -->
       <div>
         <div class="flex items-center mb-6">
-          <img class="h-12 w-auto mr-3" src="../img/logo.png" alt="SMK Negeri 3 Palu" />
+          <img class="h-12 w-auto mr-3" src="../img/logosmkn3palu.png" alt="SMK Negeri 3 Palu" />
           <div class="text-white font-['FugazOne-Regular',_sans-serif] text-xl">
-            SMK Negeri 3 Palu
+            SMK NEGERI 3 PALU
           </div>
         </div>
         <p class="text-gray-400 text-sm mb-6">
