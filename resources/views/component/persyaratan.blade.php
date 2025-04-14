@@ -3,9 +3,8 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <!-- Section Header -->
     <div class="mb-12">
-      <div class="inline-block bg-green-500 text-white px-6 py-2 rounded-lg text-lg font-semibold mb-6">
-        Persyaratan PPDB
-      </div>
+      <h2 class="text-3xl font-bold text-gray-800 mb-2">Persyaratan PPDB</h2>
+      <div class="w-20 h-1 bg-green-500 mb-6"></div>
       <div class="relative">
         <!-- Decorative Icon -->
         <div class="absolute right-0 top-0 opacity-10 transform translate-x-20">

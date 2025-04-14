@@ -481,4 +481,57 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
 
+  // FAQ Accordion dengan animasi yang lebih halus
+  document.addEventListener('DOMContentLoaded', function() {
+    const faqQuestions = document.querySelectorAll('.faq-question');
+    
+    faqQuestions.forEach(question => {
+      question.addEventListener('click', function() {
+        const answer = this.nextElementSibling;
+        const icon = this.querySelector('svg');
+        
+        // Toggle active class
+        answer.classList.toggle('active');
+        if (answer.classList.contains('active')) {
+          answer.classList.remove('hidden');
+          icon.style.transform = 'rotate(180deg)';
+        } else {
+          setTimeout(() => {
+            answer.classList.add('hidden');
+          }, 300); // Sesuaikan dengan durasi animasi CSS
+          icon.style.transform = 'rotate(0deg)';
+        }
+        
+        // Close other FAQs
+        faqQuestions.forEach(otherQuestion => {
+          if (otherQuestion !== question) {
+            const otherAnswer = otherQuestion.nextElementSibling;
+            const otherIcon = otherQuestion.querySelector('svg');
+            
+            otherAnswer.classList.remove('active');
+            setTimeout(() => {
+              if (!otherAnswer.classList.contains('active')) {
+                otherAnswer.classList.add('hidden');
+              }
+            }, 300);
+            otherIcon.style.transform = 'rotate(0deg)';
+          }
+        });
+      });
+    });
+  });
+
+</script>
+<script src="{{ asset('animations.js') }}"></script>
+<script>
+  // Execute animations once the DOM is loaded
+  document.addEventListener('DOMContentLoaded', function() {
+    // Check if animations.js is loaded correctly
+    if (typeof initAnimations === 'function') {
+      console.log('Animations script loaded successfully');
+      initAnimations();
+    } else {
+      console.error('Animations script not loaded properly');
+    }
+  });
 </script>
