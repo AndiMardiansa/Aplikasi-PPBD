@@ -522,3 +522,16 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
 </script>
+<script src="{{ asset('animations.js') }}"></script>
+<script>
+  // Execute animations once the DOM is loaded
+  document.addEventListener('DOMContentLoaded', function() {
+    // Check if animations.js is loaded correctly
+    if (typeof initAnimations === 'function') {
+      console.log('Animations script loaded successfully');
+      initAnimations();
+    } else {
+      console.error('Animations script not loaded properly');
+    }
+  });
+</script>

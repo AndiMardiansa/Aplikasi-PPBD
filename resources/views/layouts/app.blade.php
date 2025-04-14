@@ -5,6 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
     <!-- Stylesheets -->
     <link rel="stylesheet" href="./vars.css" />
     <link rel="stylesheet" href="./style.css" />
@@ -12,8 +16,10 @@
     <!-- Scripts -->
     <script src="https://cdn.tailwindcss.com/3.2.0"></script>
     <script src="./tailwind.config.js"></script>
+    <script src="{{ asset('js/animations.js') }}"></script>
     
     <!-- Global Styles -->
+    @include('component.font-styles')
     @include('component.base-styles')
     @include('component.header-styles')
     @include('component.component-styles')
@@ -36,5 +42,14 @@
     </div>
     
     @include('component.scripts')
+    
+    <script>
+        // Initialize animations when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof initAnimations === 'function') {
+                initAnimations();
+            }
+        });
+    </script>
 </body>
 </html>
