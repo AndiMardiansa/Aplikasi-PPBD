@@ -245,7 +245,7 @@
             
             <h3 class="text-xl font-bold text-gray-900 mb-5">Pemberitahuan</h3>
             <p class="text-gray-600 my-4">
-                Anda belum mendaftar sebagai Calon peserta Didik Baru SMK NEGERI 3 PAALU.
+                Anda belum mendaftar sebagai Calon peserta Didik Baru SMK NEGERI 3 PALU.
             </p>
             <div class="mt-6">
                 <a href="{{ route('register.ppdb') }}" class="px-4 py-2 bg-green-500 text-white text-base font-medium rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-300">
