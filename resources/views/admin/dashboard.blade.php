@@ -15,7 +15,7 @@
             </svg>
         </div>
         <div>
-            <p class="text-5xl font-bold text-gray-800">3</p>
+            <p class="text-5xl font-bold text-gray-800">{{ $totalUsers }}</p>
             <p class="text-gray-600 mt-1">Total Pengguna</p>
         </div>
     </div>
@@ -28,7 +28,7 @@
             </svg>
         </div>
         <div>
-            <p class="text-5xl font-bold text-gray-800">1</p>
+            <p class="text-5xl font-bold text-gray-800">{{ $registeredStudents }}</p>
             <p class="text-gray-600 mt-1">Siswa Mendaftar</p>
             <a href="#" class="text-xs text-green-500 flex items-center mt-1">
                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -48,7 +48,7 @@
             </svg>
         </div>
         <div>
-            <p class="text-5xl font-bold text-gray-800">1</p>
+            <p class="text-5xl font-bold text-gray-800">{{ $acceptedStudents }}</p>
             <p class="text-gray-600 mt-1">Siswa Diterima</p>
             <a href="#" class="text-xs text-green-500 flex items-center mt-1">
                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -68,7 +68,7 @@
             </svg>
         </div>
         <div>
-            <p class="text-5xl font-bold text-gray-800">1</p>
+            <p class="text-5xl font-bold text-gray-800">{{ $reRegisteredStudents }}</p>
             <p class="text-gray-600 mt-1">Siswa Daftar Ulang</p>
             <a href="#" class="text-xs text-green-500 flex items-center mt-1">
                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -84,62 +84,201 @@
 <!-- Chart Section -->
 <div class="bg-white rounded-lg shadow mb-8 p-6">
     <h2 class="text-lg font-semibold text-gray-800 mb-4">Grafik PPDB berdasarkan jurusan</h2>
-    <div class="h-80 w-full">
-        <canvas id="registerChart"></canvas>
+    <div class="h-80 w-full" id="chartContainer">
+        <div id="ppdbChart"></div>
     </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <div>
+                    <h5 class="card-title mb-0">Statistik Pendaftar PPDB</h5>
+                </div>
+                <div id="ppdb-statistics"></div>
+            </div>
+        </div>
+    </div>
+    <!-- Chart Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var options = {
+                series: [{
+                    name: 'Pendaftar',
+                    data: @json($jurusanCounts)
+                }],
+                chart: {
+                    height: 350,
+                    type: 'bar',
+                },
+                plotOptions: {
+                    bar: {
+                        borderRadius: 10,
+                        dataLabels: {
+                            position: 'top',
+                        },
+                    }
+                },
+                dataLabels: {
+                    enabled: true,
+                    formatter: function (val) {
+                        return val;
+                    },
+                    offsetY: -20,
+                    style: {
+                        fontSize: '12px',
+                        colors: ["#304758"]
+                    }
+                },
+                xaxis: {
+                    categories: @json($jurusanNames),
+                    position: 'bottom',
+                    axisBorder: {
+                        show: false
+                    },
+                    axisTicks: {
+                        show: false
+                    },
+                    crosshairs: {
+                        fill: {
+                            type: 'gradient',
+                            gradient: {
+                                colorFrom: '#D8E3F0',
+                                colorTo: '#BED1E6',
+                                stops: [0, 100],
+                                opacityFrom: 0.4,
+                                opacityTo: 0.5,
+                            }
+                        }
+                    },
+                    tooltip: {
+                        enabled: true,
+                    }
+                },
+                yaxis: {
+                    axisBorder: {
+                        show: false
+                    },
+                    axisTicks: {
+                        show: false,
+                    },
+                    labels: {
+                        show: true,
+                        formatter: function (val) {
+                            return val;
+                        }
+                    }
+                },
+                title: {
+                    text: 'Jumlah Pendaftar per Jurusan',
+                    floating: false,
+                    offsetY: 0,
+                    align: 'center',
+                    style: {
+                        color: '#444'
+                    }
+                }
+            };
+
+            var chart = new ApexCharts(document.querySelector("#ppdb-statistics"), options);
+            chart.render();
+        });
+    </script>
 </div>
 @endsection
 
 @push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    // Initialize chart
-    function initChart() {
-        const ctx = document.getElementById('registerChart').getContext('2d');
-        
-        const registerChart = new Chart(ctx, {
+document.addEventListener('DOMContentLoaded', function() {
+    // Data dari controller
+    const jurusanNames = @json($jurusanNames);
+    const jurusanCounts = @json($jurusanCounts);
+    
+    // Konfigurasi chart
+    const options = {
+        series: [{
+            name: 'Jumlah Pendaftar',
+            data: jurusanCounts
+        }],
+        chart: {
             type: 'bar',
-            data: {
-                labels: ['TKJ', 'RPL', 'MM', 'AKL', 'OTKP', 'BDP'],
-                datasets: [{
-                    label: 'Jumlah Pendaftar',
-                    data: [1, 0, 0, 0, 0, 0],
-                    backgroundColor: [
-                        'rgba(54, 162, 235, 0.5)',
-                        'rgba(75, 192, 192, 0.5)',
-                        'rgba(255, 206, 86, 0.5)',
-                        'rgba(153, 102, 255, 0.5)',
-                        'rgba(255, 159, 64, 0.5)',
-                        'rgba(255, 99, 132, 0.5)'
-                    ],
-                    borderColor: [
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)',
-                        'rgba(255, 99, 132, 1)'
-                    ],
-                    borderWidth: 1
-                }]
+            height: 350,
+            toolbar: {
+                show: false
+            }
+        },
+        plotOptions: {
+            bar: {
+                horizontal: false,
+                columnWidth: '55%',
+                borderRadius: 5,
+                endingShape: 'rounded',
+                distributed: true
             },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            precision: 0
-                        }
-                    }
+        },
+        colors: ['#54B4D3', '#A66CFF', '#9C27B0', '#F44336', '#FF9800', '#4CAF50'],
+        dataLabels: {
+            enabled: true,
+            formatter: function(val) {
+                return val;
+            },
+            style: {
+                fontSize: '12px',
+                fontWeight: 'bold',
+                colors: ['#fff']
+            },
+            background: {
+                enabled: false
+            }
+        },
+        xaxis: {
+            categories: jurusanNames,
+            labels: {
+                style: {
+                    fontSize: '12px'
+                }
+            },
+            title: {
+                text: 'Jurusan'
+            }
+        },
+        yaxis: {
+            title: {
+                text: 'Jumlah Pendaftar'
+            },
+            min: 0,
+            forceNiceScale: true,
+            labels: {
+                formatter: function(val) {
+                    return Math.floor(val);
                 }
             }
-        });
-    }
-    
-    document.addEventListener('DOMContentLoaded', function() {
-        initChart();
-    });
+        },
+        grid: {
+            borderColor: '#e7e7e7',
+            row: {
+                colors: ['#f3f3f3', 'transparent'],
+                opacity: 0.5
+            },
+        },
+        legend: {
+            show: false
+        },
+        fill: {
+            opacity: 1
+        },
+        tooltip: {
+            y: {
+                formatter: function(val) {
+                    return val + " Pendaftar";
+                }
+            }
+        }
+    };
+
+    const chart = new ApexCharts(document.querySelector("#ppdbChart"), options);
+    chart.render();
+});
 </script>
 @endpush 

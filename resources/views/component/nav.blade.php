@@ -19,7 +19,7 @@
       <!-- Auth Buttons for Desktop -->
       <div class="hidden md:flex items-center space-x-4">
         <a href="{{ route('login.show') }}" class="text-base font-medium text-[#212121] px-6 py-2 rounded-md border border-[#e5e5e5] hover:bg-[#212121] hover:text-white transition-all duration-300">Login</a>
-        <a href="#" class="text-base font-medium text-white px-6 py-2  bg-green-500 rounded-lg hover:bg-green-700 transition-all duration-300 transform hover:scale-105 hover:shadow-lg">Register</a>
+        <a href="{{ route('register.show') }}" class="text-base font-medium text-white px-6 py-2  bg-green-500 rounded-lg hover:bg-green-700 transition-all duration-300 transform hover:scale-105 hover:shadow-lg">Register</a>
       </div>
 
       <!-- Mobile Menu Button -->

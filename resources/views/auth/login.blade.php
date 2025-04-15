@@ -24,6 +24,17 @@
                 </div>
             @endif
 
+            @if ($errors->any())
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                    <strong class="font-bold">Error!</strong>
+                    <ul class="mt-1 list-disc list-inside text-sm">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <form class="space-y-6" action="{{ route('login.post') }}" method="POST">
                 @csrf
                 
@@ -32,7 +43,7 @@
                         Email
                     </label>
                     <div class="mt-1">
-                        <input id="email" name="email" type="email" autocomplete="email" required 
+                        <input id="email" name="email" type="email" autocomplete="email" required value="{{ old('email') }}"
                             class="appearance-none block w-full px-3 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#f3274c] focus:border-[#f3274c] transition-all duration-300">
                     </div>
                 </div>
@@ -74,7 +85,7 @@
             <div class="mt-6 text-center">
                 <p class="text-sm text-gray-600">
                     Belum punya akun? 
-                    <a href="#" class="font-medium text-[#f3274c] hover:text-[#ffae22] transition-all duration-300">
+                    <a href="{{ route('register.show') }}" class="font-medium text-[#f3274c] hover:text-[#ffae22] transition-all duration-300">
                         Daftar sekarang
                     </a>
                 </p>

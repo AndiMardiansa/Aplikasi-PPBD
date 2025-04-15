@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -27,9 +29,53 @@ class LoginController extends Controller
                 return redirect()->route('home')->with('success', 'Login Berhasil Dilakukan');
             }          
         } else {
-            return redirect()->route('login')->withErrors('Login Gagal Dilakukan Pastikan Email Dan Password Benar');
+            // Cek apakah email ada di database
+            $user = User::where('email', $request->email)->first();
+            
+            if ($user) {
+                // Email benar, password salah
+                return redirect()->route('login.show')->withErrors('Password yang Anda masukkan salah');
+            } else {
+                // Email tidak ditemukan
+                return redirect()->route('login.show')->withErrors('Email tidak terdaftar. Silakan daftar terlebih dahulu');
+            }
         }
     }
+
+    public function register(Request $request)
+    {
+        return view('auth.register');
+    }
+
+    public function registerpost(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email:dns|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+        ], [
+            'name.required' => 'Nama Wajib Diisi',
+            'email.required' => 'Email Wajib Diisi',
+            'email.email' => 'Format Email Tidak Valid',
+            'email.unique' => 'Email Sudah Terdaftar',
+            'password.required' => 'Password Wajib Diisi',
+            'password.min' => 'Password Minimal 8 Karakter',
+            'password.confirmed' => 'Konfirmasi Password Tidak Cocok',
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => 'user',
+        ]);
+
+        Auth::login($user);
+        session(['last_activity' => time()]);
+
+        return redirect()->route('home')->with('success', 'Registrasi Berhasil Dilakukan');
+    }
+    
     public function logout(Request $request)
     {
         Auth::logout();
