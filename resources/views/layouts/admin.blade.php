@@ -7,10 +7,20 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <!-- ApexCharts -->
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <style>
+        @media (max-width: 768px) {
+            .sidebar-open {
+                transform: translateX(0);
+            }
+            .sidebar-closed {
+                transform: translateX(-100%);
+            }
+        }
+    </style>
 </head>
 <body class="flex h-screen bg-gray-100">
     <!-- Sidebar -->
-    <div class="w-64 bg-gray-900 text-white">
+    <div id="sidebar" class="fixed md:static w-64 h-screen bg-gray-900 text-white transform transition-transform duration-300 ease-in-out md:translate-x-0 sidebar-closed md:sidebar-open z-30">
         <div class="flex items-center p-4 border-b border-gray-800">
             <img src="{{ asset('img/logosmkn3palu.png') }}" alt="Logo" class="w-10 h-10 mr-3">
             <div>
@@ -19,9 +29,8 @@
             </div>
         </div>
         
-        
         <nav class="mt-6">
-            <a href="{{ route('admin.dashboard') }}" class="flex items-center px-6 py-3 {{ request()->routeIs('admin.dashboard') ? 'bg-gray-800 border-l-4 border-green-500' : 'hover:bg-gray-800' }} transition">
+            <a href="{{ route('home_admin') }}" class="flex items-center px-6 py-3 {{ request()->routeIs('admin.dashboard') ? 'bg-gray-800 border-l-4 border-green-500' : 'hover:bg-gray-800' }} transition">
                 <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
                 </svg>
@@ -72,15 +81,18 @@
         </nav>
         
         <div class="absolute bottom-0 w-64 p-4 text-xs text-gray-400">
-            Copyright © 2025 Ali Mochtar Development System
+            Copyright © 2025 SMKN 3 Palu
         </div>
     </div>
+
+    <!-- Overlay for mobile -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black opacity-50 z-20 hidden md:hidden" onclick="toggleSidebar()"></div>
     
     <!-- Main Content -->
     <div class="flex-1 flex flex-col overflow-hidden">
         <!-- Top Navigation -->
         <header class="flex justify-between items-center p-4 bg-white border-b">
-            <button class="text-gray-500 focus:outline-none">
+            <button onclick="toggleSidebar()" class="text-gray-500 focus:outline-none hover:bg-gray-100 p-2 rounded-md">
                 <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M4 6H20M4 12H20M4 18H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                 </svg>
@@ -135,6 +147,20 @@
     
     <!-- Scripts -->
     <script>
+        // Sidebar toggle function
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            
+            sidebar.classList.toggle('sidebar-closed');
+            sidebar.classList.toggle('sidebar-open');
+            
+            // Toggle overlay
+            if (window.innerWidth < 768) { // Only show overlay on mobile
+                overlay.classList.toggle('hidden');
+            }
+        }
+
         // Dropdown toggle function
         function toggleDropdown() {
             const dropdown = document.getElementById('profileDropdown');
@@ -167,6 +193,21 @@
             
             setTimeout(updateTime, 1000);
         }
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            
+            if (window.innerWidth >= 768) {
+                sidebar.classList.remove('sidebar-closed');
+                sidebar.classList.add('sidebar-open');
+                overlay.classList.add('hidden');
+            } else {
+                sidebar.classList.add('sidebar-closed');
+                sidebar.classList.remove('sidebar-open');
+            }
+        });
         
         // Run when DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
@@ -180,6 +221,13 @@
                     item.classList.add('bg-gray-800', 'border-l-4', 'border-green-500');
                 }
             });
+
+            // Initialize sidebar state based on screen size
+            if (window.innerWidth < 768) {
+                const sidebar = document.getElementById('sidebar');
+                sidebar.classList.add('sidebar-closed');
+                sidebar.classList.remove('sidebar-open');
+            }
         });
     </script>
     @stack('scripts')
