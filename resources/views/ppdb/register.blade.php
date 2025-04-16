@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+{{-- @extends('layouts.dashboard') --}}
 @section('title', 'Pendaftaran PPDB - SMK NEGERI 3 PALU')
 
 @section('content')
@@ -94,7 +95,24 @@
                             <p class="text-sm font-medium text-gray-900">{{ Auth::user()->name }}</p>
                             <p class="text-xs text-gray-500">{{ Auth::user()->email }}</p>
                         </div>
-                        <img class="h-10 w-10 rounded-full bg-gray-300" src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&color=7F9CF5&background=EBF4FF" alt="User avatar">
+                        <div class="relative" x-data="{ open: false }">
+                            <button @click="open = !open" class="flex items-center focus:outline-none">
+                                <img class="h-10 w-10 rounded-full bg-gray-300" src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&color=7F9CF5&background=EBF4FF" alt="User avatar">
+                                <svg class="w-4 h-4 ml-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                            <div x-show="open" 
+                                 @click.away="open = false"
+                                 class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1">
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                        Logout
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -106,11 +124,11 @@
                 <!-- Breadcrumb Navigation -->
                 <div class="mb-8">
                     <div class="flex items-center space-x-2">
-                        <span class="font-medium text-green-500">Biodata Siswa</span>
+                        <span class="font-medium text-gray-500" id="step1">Biodata Siswa</span>
                         <span class="text-gray-500">&gt;</span>
-                        <span class="text-gray-500">Biodata Orangtua</span>
+                        <span class="font-medium text-gray-500" id="step2">Biodata Orangtua</span>
                         <span class="text-gray-500">&gt;</span>
-                        <span class="text-gray-500">Unggah Dokumen</span>
+                        <span class="font-medium text-gray-500" id="step3">Unggah Dokumen</span>
                     </div>
                 </div>
 
@@ -251,6 +269,23 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div class="mt-4">
+                                        <label for="jurusan_id" class="block text-sm font-medium text-gray-700">
+                                            Pilihan Jurusan
+                                        </label>
+                                        <div class="mt-1">
+                                            <select id="jurusan_id" name="jurusan_id" required
+                                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#f3274c] focus:border-[#f3274c] sm:text-sm">
+                                                <option value="">Pilih Jurusan</option>
+                                                @foreach($jurusans as $j)
+                                                    <option value="{{ $j->id }}" {{ old('jurusan_id') == $j->id ? 'selected' : '' }}>
+                                                        {{ $j->nama_jurusan }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -386,19 +421,21 @@
     const totalSteps = 3;
 
     function updateBreadcrumb() {
-        const steps = document.querySelectorAll('.flex.items-center.space-x-2 span:not(.text-gray-500)');
-        steps.forEach((step, index) => {
-            if (index + 1 < currentStep) {
-                step.classList.remove('text-gray-500');
-                step.classList.add('text-green-500');
-            } else if (index + 1 === currentStep) {
-                step.classList.remove('text-gray-500');
-                step.classList.add('text-green-500');
-            } else {
-                step.classList.remove('text-green-500');
-                step.classList.add('text-gray-500');
-            }
-        });
+        // Reset all steps to inactive
+        for (let i = 1; i <= totalSteps; i++) {
+            document.getElementById(`step${i}`).classList.remove('text-green-500');
+            document.getElementById(`step${i}`).classList.add('text-gray-500');
+        }
+        
+        // Set current step as active
+        document.getElementById(`step${currentStep}`).classList.remove('text-gray-500');
+        document.getElementById(`step${currentStep}`).classList.add('text-green-500');
+        
+        // Set completed steps as green
+        for (let i = 1; i < currentStep; i++) {
+            document.getElementById(`step${i}`).classList.remove('text-gray-500');
+            document.getElementById(`step${i}`).classList.add('text-green-500');
+        }
     }
 
     function showStep(step) {
@@ -414,6 +451,7 @@
         document.getElementById('submitBtn').style.display = step === totalSteps ? 'block' : 'none';
         
         // Update breadcrumb
+        currentStep = step;
         updateBreadcrumb();
     }
 

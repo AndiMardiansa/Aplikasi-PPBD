@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 
-@section('title', 'Dashboard PPDB - SMK VIP Maarif NU 1 Kemiri')
+@section('title', 'Dashboard PPDB - SMK NEGERI 3 PALU')
 
 @section('content')
 <div class="flex h-screen bg-gray-100">
@@ -9,7 +9,7 @@
         <!-- Logo -->
         <div class="p-4 flex items-center border-b border-gray-700">
             <div class="mr-3">
-                <img src="{{ asset('img/logo.png') }}" alt="Logo" class="h-10 w-10">
+                <img src="{{ asset('img/logosmkn3palu.png') }}" alt="Logo" class="h-10 w-10">
             </div>
             <div>
                 <div class="text-xl font-semibold">PPDB</div>
@@ -31,7 +31,7 @@
         <nav class="flex-1 overflow-y-auto">
             <ul class="py-4">
                 <li>
-                    <a href="{{ route('home') }}" class="flex items-center px-6 py-3 text-white bg-gray-800">
+                    <a href="{{ route('home') }}" class="flex items-center px-6 py-3 text-white hover:bg-gray-800 transition-all duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 20 20" fill="currentColor">
                             <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
                         </svg>
@@ -65,7 +65,7 @@
                 <li>
                     <a href="#" class="flex items-center px-6 py-3 text-white hover:bg-gray-800 transition-all duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                            <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                         </svg>
                         Daftar ulang
                     </a>
@@ -73,7 +73,7 @@
                 <li>
                     <a href="#" class="flex items-center px-6 py-3 text-white hover:bg-gray-800 transition-all duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                            <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
                         </svg>
                         Notifikasi
                     </a>
@@ -83,18 +83,35 @@
     </div>
 
     <!-- Main Content -->
-    <div class="flex-1 flex flex-col overflow-hidden">
+    <div class="flex-1 flex flex-col overflow-hidden main-content">
         <!-- Top Header -->
         <header class="bg-white shadow-sm z-10">
             <div class="flex items-center justify-between h-16 px-6">
-                <h1 class="text-2xl font-semibold text-gray-800">Dashboard PPDB</h1>
+                <h1 class="text-2xl font-semibold text-gray-800">Dashboard Calon Siswa</h1>
                 <div class="flex items-center">
                     <div class="ml-4 relative flex items-center">
                         <div class="text-right mr-4">
                             <p class="text-sm font-medium text-gray-900">{{ Auth::user()->name }}</p>
                             <p class="text-xs text-gray-500">{{ Auth::user()->email }}</p>
                         </div>
-                        <img class="h-10 w-10 rounded-full bg-gray-300" src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&color=7F9CF5&background=EBF4FF" alt="User avatar">
+                        <div class="relative" x-data="{ open: false }">
+                            <button @click="open = !open" class="flex items-center focus:outline-none">
+                                <img class="h-10 w-10 rounded-full bg-gray-300" src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&color=7F9CF5&background=EBF4FF" alt="User avatar">
+                                <svg class="w-4 h-4 ml-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                            <div x-show="open" 
+                                 @click.away="open = false"
+                                 class="dropdown-content absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1">
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                        Logout
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -107,7 +124,7 @@
                 
                 <!-- Status Cards Row -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                    <div class="bg-white rounded-lg shadow p-5">
+                    <div class="card bg-white rounded-lg shadow p-5">
                         <div class="flex justify-between items-center">
                             <div>
                                 <h3 class="text-lg font-medium text-gray-700">Status Pendaftaran</h3>
@@ -123,13 +140,12 @@
                         </div>
                     </div>
                     
-                    <div class="bg-white rounded-lg shadow p-5">
+                    <div class="card bg-white rounded-lg shadow p-5">
                         <div class="flex justify-between items-center">
                             <div>
                                 <h3 class="text-lg font-medium text-gray-700">Jurusan Dipilih</h3>
                                 @if($hasRegistered && $registration->jurusan)
                                     <div class="mt-2">
-                                        <h4 class="text-sm text-gray-500">Jurusan Dipilih</h4>
                                         <p class="text-2xl font-bold text-gray-900">{{ $registration->jurusan->nama_jurusan }}</p>
                                     </div>
                                 @else
@@ -144,7 +160,7 @@
                         </div>
                     </div>
                     
-                    <div class="bg-white rounded-lg shadow p-5">
+                    <div class="card bg-white rounded-lg shadow p-5">
                         <div class="flex justify-between items-center">
                             <div>
                                 <h3 class="text-lg font-medium text-gray-700">Pengumuman</h3>
@@ -160,72 +176,51 @@
                 </div>
                 
                 <!-- Content Cards Row -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {{-- <!-- Jurusan Card (sebagai card tersendiri) -->
-                        @if($hasRegistered && $registration->jurusan)
-                        <div class="bg-white rounded-lg shadow overflow-hidden">
-                            <div class="p-6">
-                                <h3 class="text-xl font-semibold text-gray-800 mb-2">Jurusan Dipilih</h3>
-                                <div class="flex items-center">
-                                    <div class="flex-1">
-                                        <h4 class="text-4xl font-bold text-gray-900">{{ $registration->jurusan->nama_jurusan }}</h4>
-                                    </div>
-                                    <div class="ml-4">
-                                        <div class="p-3 bg-green-100 rounded-full">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-green-500" viewBox="0 0 20 20" fill="currentColor">
-                                                <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z" />
-                                            </svg>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="card bg-white rounded-lg shadow overflow-hidden col-span-2">
+                        <div class="p-5 bg-gradient-to-r from-[#f3274c] to-[#ffae22] text-white">
+                            <h3 class="text-lg font-medium">Panduan Pendaftaran PPDB</h3>
                         </div>
-                        @endif --}}
-
-                        <div class="bg-white rounded-lg shadow overflow-hidden @if($hasRegistered && $registration->jurusan) col-span-2 @else col-span-3 @endif">
-                            <div class="p-5 bg-gradient-to-r from-[#f3274c] to-[#ffae22] text-white">
-                                <h3 class="text-lg font-medium">Panduan Pendaftaran PPDB</h3>
-                            </div>
-                            <div class="p-5">
-                                <p class="text-gray-600 mb-4">Berikut ini adalah langkah-langkah pendaftaran PPDB online di SMK VIP Maarif NU 1 Kemiri:</p>
-                                <ol class="list-decimal pl-5 space-y-2 text-gray-600">
-                                    <li>Daftar akun terlebih dahulu di website PPDB</li>
-                                    <li>Lengkapi formulir pendaftaran dengan data yang benar</li>
-                                    <li>Unggah dokumen persyaratan yang dibutuhkan</li>
-                                    <li>Konfirmasi pendaftaran melalui email</li>
-                                    <li>Pantau status pendaftaran melalui dashboard</li>
-                                </ol>
-                            </div>
-                        </div>
-                        
-                        <div class="bg-white rounded-lg shadow overflow-hidden">
-                            <div class="p-5 bg-gradient-to-r from-[#f3274c] to-[#ffae22] text-white">
-                                <h3 class="text-lg font-medium">Informasi Penting</h3>
-                            </div>
-                            <div class="p-5">
-                                <ul class="space-y-3">
-                                    <li class="flex items-start">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                        <span class="text-gray-600">Pendaftaran dibuka tanggal 1-30 Juni 2023</span>
-                                    </li>
-                                    <li class="flex items-start">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                        <span class="text-gray-600">Pengumuman hasil seleksi tanggal 5 Juli 2023</span>
-                                    </li>
-                                    <li class="flex items-start">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                        <span class="text-gray-600">Daftar ulang tanggal 6-10 Juli 2023</span>
-                                    </li>
-                                </ul>
-                            </div>
+                        <div class="p-5">
+                            <p class="text-gray-600 mb-4">Berikut ini adalah langkah-langkah pendaftaran PPDB online di SMK VIP Maarif NU 1 Kemiri:</p>
+                            <ol class="list-decimal pl-5 space-y-2 text-gray-600">
+                                <li>Daftar akun terlebih dahulu di website PPDB</li>
+                                <li>Lengkapi formulir pendaftaran dengan data yang benar</li>
+                                <li>Unggah dokumen persyaratan yang dibutuhkan</li>
+                                <li>Konfirmasi pendaftaran melalui email</li>
+                                <li>Pantau status pendaftaran melalui dashboard</li>
+                            </ol>
                         </div>
                     </div>
+                    
+                    <div class="card bg-white rounded-lg shadow overflow-hidden">
+                        <div class="p-5 bg-gradient-to-r from-[#f3274c] to-[#ffae22] text-white">
+                            <h3 class="text-lg font-medium">Informasi Penting</h3>
+                        </div>
+                        <div class="p-5">
+                            <ul class="space-y-3">
+                                <li class="flex items-start">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <span class="text-gray-600">Pendaftaran dibuka tanggal 1-30 Juni 2023</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <span class="text-gray-600">Pengumuman hasil seleksi tanggal 5 Juli 2023</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <span class="text-gray-600">Daftar ulang tanggal 6-10 Juli 2023</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </main>
     </div>
