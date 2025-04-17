@@ -1,6 +1,6 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app') --}}
 
-{{-- @extends('layouts.dashboard') --}}
+@extends('layouts.dashboard')
 @section('title', 'Pendaftaran PPDB - SMK NEGERI 3 PALU')
 
 @section('content')
@@ -141,7 +141,7 @@
                             Formulir Pendaftaran Peserta Didik Baru
                         </h2>
                         <p class="mt-2 text-center text-sm text-white opacity-80">
-                            SMK NEGERI 3 PAALU
+                            SMK NEGERI 3 PALU
                         </p>
                     </div>
 
@@ -211,7 +211,7 @@
                                             </label>
                                             <div class="mt-1">
                                                 <select id="jenis_kelamin" name="jenis_kelamin" required
-                                                    class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#f3274c] focus:border-[#f3274c] sm:text-sm">
+                                                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#f3274c] focus:border-[#f3274c] sm:text-sm">
                                                     <option value="">Pilih Jenis Kelamin</option>
                                                     <option value="L" {{ old('jenis_kelamin') == 'L' ? 'selected' : '' }}>Laki-laki</option>
                                                     <option value="P" {{ old('jenis_kelamin') == 'P' ? 'selected' : '' }}>Perempuan</option>
@@ -225,7 +225,7 @@
                                             </label>
                                             <div class="mt-1">
                                                 <select id="agama" name="agama" required
-                                                    class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#f3274c] focus:border-[#f3274c] sm:text-sm">
+                                                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#f3274c] focus:border-[#f3274c] sm:text-sm">
                                                     <option value="">Pilih Agama</option>
                                                     <option value="Islam" {{ old('agama') == 'Islam' ? 'selected' : '' }}>Islam</option>
                                                     <option value="Kristen" {{ old('agama') == 'Kristen' ? 'selected' : '' }}>Kristen</option>
@@ -276,7 +276,7 @@
                                         </label>
                                         <div class="mt-1">
                                             <select id="jurusan_id" name="jurusan_id" required
-                                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#f3274c] focus:border-[#f3274c] sm:text-sm">
+                                                class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#f3274c] focus:border-[#f3274c] sm:text-sm">
                                                 <option value="">Pilih Jurusan</option>
                                                 @foreach($jurusans as $j)
                                                     <option value="{{ $j->id }}" {{ old('jurusan_id') == $j->id ? 'selected' : '' }}>
@@ -339,64 +339,72 @@
                             </div>
 
                             <!-- Step 3: Unggah Dokumen -->
-                            <div class="step-content hidden" data-step="3">
-                                <div class="bg-gray-50 p-4 rounded-lg mb-6">
-                                    <h3 class="text-lg font-medium text-gray-900 mb-4">Unggah Dokumen</h3>
-                                    <div class="space-y-4">
-                                        <div>
-                                            <label class="block text-sm font-medium text-gray-700">
-                                                Pas Foto (3x4)
+                            <div class="step-content" id="step3">
+                                <h2 class="text-2xl font-bold mb-6">Unggah Dokumen</h2>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <!-- Pas Foto -->
+                                    <div class="space-y-2">
+                                        <label class="block text-sm font-medium text-gray-700">Pas Foto</label>
+                                        <div class="mt-1 flex items-center">
+                                            <input type="file" name="pas_foto" id="pas_foto" accept="image/*" class="hidden" required>
+                                            <label for="pas_foto" class="cursor-pointer bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                                Pilih File
                                             </label>
-                                            <div class="mt-1">
-                                                <input type="file" name="pas_foto" accept="image/*" required
-                                                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#f3274c] focus:border-[#f3274c]">
-                                                <p class="mt-1 text-xs text-gray-500">Format: JPG, JPEG, PNG (Max. 2MB)</p>
-                                            </div>
+                                            <span id="pas_foto_name" class="ml-3 text-sm text-gray-500">Belum ada file dipilih</span>
                                         </div>
+                                        <p class="text-xs text-gray-500">Format: JPG/PNG, Maksimal 2MB</p>
+                                    </div>
 
-                                        <div>
-                                            <label class="block text-sm font-medium text-gray-700">
-                                                Surat Keterangan LULUS
+                                    <!-- Surat Keterangan LULUS -->
+                                    <div class="space-y-2">
+                                        <label class="block text-sm font-medium text-gray-700">Surat Keterangan LULUS</label>
+                                        <div class="mt-1 flex items-center">
+                                            <input type="file" name="surat_keterangan_lulus" id="surat_keterangan_lulus" accept=".pdf,.doc,.docx" class="hidden" required>
+                                            <label for="surat_keterangan_lulus" class="cursor-pointer bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                                Pilih File
                                             </label>
-                                            <div class="mt-1">
-                                                <input type="file" name="surat_lulus" accept=".pdf,image/*" required
-                                                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#f3274c] focus:border-[#f3274c]">
-                                                <p class="mt-1 text-xs text-gray-500">Format: PDF, JPG, JPEG, PNG (Max. 2MB)</p>
-                                            </div>
+                                            <span id="surat_keterangan_lulus_name" class="ml-3 text-sm text-gray-500">Belum ada file dipilih</span>
                                         </div>
+                                        <p class="text-xs text-gray-500">Format: PDF/DOC, Maksimal 5MB</p>
+                                    </div>
 
-                                        <div>
-                                            <label class="block text-sm font-medium text-gray-700">
-                                                Ijazah
+                                    <!-- Ijazah -->
+                                    <div class="space-y-2">
+                                        <label class="block text-sm font-medium text-gray-700">Ijazah</label>
+                                        <div class="mt-1 flex items-center">
+                                            <input type="file" name="ijazah" id="ijazah" accept=".pdf,.doc,.docx" class="hidden" required>
+                                            <label for="ijazah" class="cursor-pointer bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                                Pilih File
                                             </label>
-                                            <div class="mt-1">
-                                                <input type="file" name="ijazah" accept=".pdf,image/*" required
-                                                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#f3274c] focus:border-[#f3274c]">
-                                                <p class="mt-1 text-xs text-gray-500">Format: PDF, JPG, JPEG, PNG (Max. 2MB)</p>
-                                            </div>
+                                            <span id="ijazah_name" class="ml-3 text-sm text-gray-500">Belum ada file dipilih</span>
                                         </div>
+                                        <p class="text-xs text-gray-500">Format: PDF/DOC, Maksimal 5MB</p>
+                                    </div>
 
-                                        <div>
-                                            <label class="block text-sm font-medium text-gray-700">
-                                                Kartu Keluarga
+                                    <!-- Kartu Keluarga -->
+                                    <div class="space-y-2">
+                                        <label class="block text-sm font-medium text-gray-700">Kartu Keluarga</label>
+                                        <div class="mt-1 flex items-center">
+                                            <input type="file" name="kartu_keluarga" id="kartu_keluarga" accept=".pdf,.doc,.docx" class="hidden" required>
+                                            <label for="kartu_keluarga" class="cursor-pointer bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                                Pilih File
                                             </label>
-                                            <div class="mt-1">
-                                                <input type="file" name="kartu_keluarga" accept=".pdf,image/*" required
-                                                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#f3274c] focus:border-[#f3274c]">
-                                                <p class="mt-1 text-xs text-gray-500">Format: PDF, JPG, JPEG, PNG (Max. 2MB)</p>
-                                            </div>
+                                            <span id="kartu_keluarga_name" class="ml-3 text-sm text-gray-500">Belum ada file dipilih</span>
                                         </div>
+                                        <p class="text-xs text-gray-500">Format: PDF/DOC, Maksimal 5MB</p>
+                                    </div>
 
-                                        <div>
-                                            <label class="block text-sm font-medium text-gray-700">
-                                                Akte Kelahiran
+                                    <!-- Akte Kelahiran -->
+                                    <div class="space-y-2">
+                                        <label class="block text-sm font-medium text-gray-700">Akte Kelahiran</label>
+                                        <div class="mt-1 flex items-center">
+                                            <input type="file" name="akte_kelahiran" id="akte_kelahiran" accept=".pdf,.doc,.docx" class="hidden" required>
+                                            <label for="akte_kelahiran" class="cursor-pointer bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                                Pilih File
                                             </label>
-                                            <div class="mt-1">
-                                                <input type="file" name="akte_kelahiran" accept=".pdf,image/*" required
-                                                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#f3274c] focus:border-[#f3274c]">
-                                                <p class="mt-1 text-xs text-gray-500">Format: PDF, JPG, JPEG, PNG (Max. 2MB)</p>
-                                            </div>
+                                            <span id="akte_kelahiran_name" class="ml-3 text-sm text-gray-500">Belum ada file dipilih</span>
                                         </div>
+                                        <p class="text-xs text-gray-500">Format: PDF/DOC, Maksimal 5MB</p>
                                     </div>
                                 </div>
                             </div>
@@ -415,6 +423,28 @@
     </div>
 </div>
 
+@push('styles')
+<style>
+    /* Styling untuk dropdown */
+    select {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+        background-position: right 0.5rem center;
+        background-repeat: no-repeat;
+        background-size: 1.5em 1.5em;
+        padding-right: 2.5rem;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+    }
+    
+    select:focus {
+        border-color: #f3274c;
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(243, 39, 76, 0.2);
+    }
+</style>
+@endpush
+
 @push('scripts')
 <script>
     let currentStep = 1;
@@ -431,7 +461,7 @@
         document.getElementById(`step${currentStep}`).classList.remove('text-gray-500');
         document.getElementById(`step${currentStep}`).classList.add('text-green-500');
         
-        // Set completed steps as green
+        // Set completed steps as greenstatus
         for (let i = 1; i < currentStep; i++) {
             document.getElementById(`step${i}`).classList.remove('text-gray-500');
             document.getElementById(`step${i}`).classList.add('text-green-500');
