@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Detail Pendaftaran PPDB - SMK VIP Maarif NU 1 Kemiri')
+@section('title', 'Detail Pendaftaran PPDB - SMK NEGERI 3 PALU')
 
 @section('content')
 <div class="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8 mt-16">
@@ -13,7 +13,7 @@
                 Detail Pendaftaran PPDB
             </h2>
             <p class="mt-2 text-center text-sm text-white opacity-80">
-                SMK NEGERI 3 PAALU
+                SMK NEGERI 3 PALU
             </p>
         </div>
         
@@ -171,7 +171,7 @@
                 </div>
             </div>
             
-            <div class="bg-gray-50 p-4 rounded-lg">
+            <div class="bg-gray-50 p-4 rounded-lg mb-6">
                 <h3 class="text-lg font-medium text-gray-900 mb-4">Pilihan Jurusan</h3>
                 
                 <div>
@@ -180,6 +180,133 @@
                     </label>
                     <div class="mt-1 py-2 px-3 bg-gray-100 rounded-md">
                         {{ $registration->jurusan->nama_jurusan }}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-gray-50 p-6 rounded-lg mb-6">
+                <h3 class="text-lg font-medium text-gray-900 mb-6">Dokumen yang Diunggah</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+                        <label class="block text-sm font-medium text-gray-700 mb-3">
+                            Pas Foto (3x4)
+                        </label>
+                        <div class="mt-1 flex justify-center">
+                            @if($registration->pas_foto)
+                                <img src="{{ asset('storage/' . $registration->pas_foto) }}" 
+                                     alt="Pas Foto" 
+                                     class="h-48 w-auto object-cover rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+                            @else
+                                <div class="h-48 w-36 flex items-center justify-center bg-gray-100 rounded-lg">
+                                    <span class="text-gray-400">Foto belum diunggah</span>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+                        <label class="block text-sm font-medium text-gray-700 mb-3">
+                            Surat Keterangan LULUS
+                        </label>
+                        <div class="mt-1">
+                            @if($registration->surat_lulus)
+                                <a href="{{ asset('storage/' . $registration->surat_lulus) }}" 
+                                   target="_blank" 
+                                   class="flex items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+                                    <svg class="w-8 h-8 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9 2a2 2 0 00-2 2v8a2 2 0 002 2h6a2 2 0 002-2V6.414A2 2 0 0016.414 5L14 2.586A2 2 0 0012.586 2H9z"/>
+                                        <path d="M3 8a2 2 0 012-2h2.93a.5.5 0 01.5.5v1a.5.5 0 01-.5.5H5v6h10v-6h-2.93a.5.5 0 01-.5-.5v-1a.5.5 0 01.5-.5H15a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8z"/>
+                                    </svg>
+                                    <div class="ml-4">
+                                        <p class="text-sm font-medium text-gray-900">Surat Keterangan LULUS</p>
+                                        <p class="text-xs text-gray-500">Klik untuk melihat dokumen</p>
+                                    </div>
+                                </a>
+                            @else
+                                <div class="flex items-center p-4 bg-gray-50 rounded-lg">
+                                    <span class="text-gray-400">Dokumen belum diunggah</span>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+                        <label class="block text-sm font-medium text-gray-700 mb-3">
+                            Ijazah
+                        </label>
+                        <div class="mt-1">
+                            @if($registration->ijazah)
+                                <a href="{{ asset('storage/' . $registration->ijazah) }}" 
+                                   target="_blank" 
+                                   class="flex items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+                                    <svg class="w-8 h-8 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9 2a2 2 0 00-2 2v8a2 2 0 002 2h6a2 2 0 002-2V6.414A2 2 0 0016.414 5L14 2.586A2 2 0 0012.586 2H9z"/>
+                                        <path d="M3 8a2 2 0 012-2h2.93a.5.5 0 01.5.5v1a.5.5 0 01-.5.5H5v6h10v-6h-2.93a.5.5 0 01-.5-.5v-1a.5.5 0 01.5-.5H15a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8z"/>
+                                    </svg>
+                                    <div class="ml-4">
+                                        <p class="text-sm font-medium text-gray-900">Ijazah</p>
+                                        <p class="text-xs text-gray-500">Klik untuk melihat dokumen</p>
+                                    </div>
+                                </a>
+                            @else
+                                <div class="flex items-center p-4 bg-gray-50 rounded-lg">
+                                    <span class="text-gray-400">Dokumen belum diunggah</span>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+                        <label class="block text-sm font-medium text-gray-700 mb-3">
+                            Kartu Keluarga
+                        </label>
+                        <div class="mt-1">
+                            @if($registration->kartu_keluarga)
+                                <a href="{{ asset('storage/' . $registration->kartu_keluarga) }}" 
+                                   target="_blank" 
+                                   class="flex items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+                                    <svg class="w-8 h-8 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9 2a2 2 0 00-2 2v8a2 2 0 002 2h6a2 2 0 002-2V6.414A2 2 0 0016.414 5L14 2.586A2 2 0 0012.586 2H9z"/>
+                                        <path d="M3 8a2 2 0 012-2h2.93a.5.5 0 01.5.5v1a.5.5 0 01-.5.5H5v6h10v-6h-2.93a.5.5 0 01-.5-.5v-1a.5.5 0 01.5-.5H15a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8z"/>
+                                    </svg>
+                                    <div class="ml-4">
+                                        <p class="text-sm font-medium text-gray-900">Kartu Keluarga</p>
+                                        <p class="text-xs text-gray-500">Klik untuk melihat dokumen</p>
+                                    </div>
+                                </a>
+                            @else
+                                <div class="flex items-center p-4 bg-gray-50 rounded-lg">
+                                    <span class="text-gray-400">Dokumen belum diunggah</span>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+                        <label class="block text-sm font-medium text-gray-700 mb-3">
+                            Akte Kelahiran
+                        </label>
+                        <div class="mt-1">
+                            @if($registration->akte_kelahiran)
+                                <a href="{{ asset('storage/' . $registration->akte_kelahiran) }}" 
+                                   target="_blank" 
+                                   class="flex items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+                                    <svg class="w-8 h-8 text-purple-500" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9 2a2 2 0 00-2 2v8a2 2 0 002 2h6a2 2 0 002-2V6.414A2 2 0 0016.414 5L14 2.586A2 2 0 0012.586 2H9z"/>
+                                        <path d="M3 8a2 2 0 012-2h2.93a.5.5 0 01.5.5v1a.5.5 0 01-.5.5H5v6h10v-6h-2.93a.5.5 0 01-.5-.5v-1a.5.5 0 01.5-.5H15a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8z"/>
+                                    </svg>
+                                    <div class="ml-4">
+                                        <p class="text-sm font-medium text-gray-900">Akte Kelahiran</p>
+                                        <p class="text-xs text-gray-500">Klik untuk melihat dokumen</p>
+                                    </div>
+                                </a>
+                            @else
+                                <div class="flex items-center p-4 bg-gray-50 rounded-lg">
+                                    <span class="text-gray-400">Dokumen belum diunggah</span>
+                                </div>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>

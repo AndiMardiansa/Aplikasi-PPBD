@@ -38,6 +38,20 @@ class PPDBRegistration extends Model
         'pekerjaan_ibu',
         'jurusan_id',
         'status',
+        'pas_foto',
+        'surat_lulus',
+        'ijazah',
+        'kartu_keluarga',
+        'akte_kelahiran'
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'tanggal_lahir' => 'date',
     ];
 
     /**
@@ -54,5 +68,29 @@ class PPDBRegistration extends Model
     public function jurusan()
     {
         return $this->belongsTo(Jurusan::class);
+    }
+
+    /**
+     * Get the status text in Indonesian.
+     *
+     * @return string
+     */
+    public function getStatusTextAttribute()
+    {
+        return match($this->status) {
+            'accepted' => 'Diterima',
+            'rejected' => 'Ditolak',
+            default => 'Menunggu Verifikasi'
+        };
+    }
+
+    /**
+     * Get the gender text in Indonesian.
+     *
+     * @return string
+     */
+    public function getJenisKelaminTextAttribute()
+    {
+        return $this->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan';
     }
 } 

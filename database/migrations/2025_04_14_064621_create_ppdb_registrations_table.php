@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('nama_ibu');
             $table->string('pekerjaan_ayah', 100);
             $table->string('pekerjaan_ibu', 100);
+            
             $table->foreignId('jurusan_id')->constrained('jurusans')->onDelete('cascade');
             $table->enum('status', ['pending', 'accepted', 'rejected'])->default('pending');
             $table->timestamps();
