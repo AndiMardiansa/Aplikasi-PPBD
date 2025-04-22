@@ -67,6 +67,7 @@ class PPDBController extends Controller
                 ->with('info', 'Anda sudah terdaftar sebagai Calon Peserta Didik Baru.');
         }
         
+        // Validasi input termasuk file
         $request->validate([
             'nama_lengkap' => 'required|string|max:255',
             'nisn' => 'required|string|max:20|unique:ppdb_registrations,nisn',
@@ -82,28 +83,38 @@ class PPDBController extends Controller
             'pekerjaan_ayah' => 'required|string|max:100',
             'pekerjaan_ibu' => 'required|string|max:100',
             'jurusan_id' => 'required|exists:jurusans,id',
+            'pas_foto' => 'required|image|mimes:jpeg,png|max:2048',
+            'surat_keterangan_lulus' => 'required|mimes:pdf,doc,docx|max:5120',
+            'ijazah' => 'required|mimes:pdf,doc,docx|max:5120',
+            'kartu_keluarga' => 'required|mimes:pdf,doc,docx|max:5120',
+            'akte_kelahiran' => 'required|mimes:pdf,doc,docx|max:5120',
         ]);
+
+        // Upload dan simpan file-file
+        $data = $request->all();
         
-        // Create PPDB registration
-        PPDBRegistration::create([
-            'user_id' => $user->id,
-            'nama_lengkap' => $request->nama_lengkap,
-            'nisn' => $request->nisn,
-            'tempat_lahir' => $request->tempat_lahir,
-            'tanggal_lahir' => $request->tanggal_lahir,
-            'jenis_kelamin' => $request->jenis_kelamin,
-            'agama' => $request->agama,
-            'alamat' => $request->alamat,
-            'no_telepon' => $request->no_telepon,
-            'asal_sekolah' => $request->asal_sekolah,
-            'nama_ayah' => $request->nama_ayah,
-            'nama_ibu' => $request->nama_ibu,
-            'pekerjaan_ayah' => $request->pekerjaan_ayah,
-            'pekerjaan_ibu' => $request->pekerjaan_ibu,
-            'jurusan_id' => $request->jurusan_id,
-            'status' => 'pending',
-        ]);
+        if ($request->hasFile('pas_foto')) {
+            $data['pas_foto'] = $request->file('pas_foto')->store('pas_foto', 'public');
+        }
+        if ($request->hasFile('surat_keterangan_lulus')) {
+            $data['surat_lulus'] = $request->file('surat_keterangan_lulus')->store('surat_lulus', 'public');
+        }
+        if ($request->hasFile('ijazah')) {
+            $data['ijazah'] = $request->file('ijazah')->store('ijazah', 'public');
+        }
+        if ($request->hasFile('kartu_keluarga')) {
+            $data['kartu_keluarga'] = $request->file('kartu_keluarga')->store('kartu_keluarga', 'public');
+        }
+        if ($request->hasFile('akte_kelahiran')) {
+            $data['akte_kelahiran'] = $request->file('akte_kelahiran')->store('akte_kelahiran', 'public');
+        }
+
+        // Buat registrasi PPDB
+        $data['user_id'] = $user->id;
+        $data['status'] = 'pending';
         
+        PPDBRegistration::create($data);
+
         return redirect()->route('home')
             ->with('success', 'Pendaftaran PPDB berhasil dilakukan. Status pendaftaran Anda sedang dalam proses verifikasi.');
     }
