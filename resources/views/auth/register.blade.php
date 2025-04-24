@@ -82,7 +82,7 @@
             <div class="mt-6 text-center">
                 <p class="text-sm text-gray-600">
                     Sudah punya akun? 
-                    <a href="{{ route('login.show') }}" class="font-medium text-[#f3274c] hover:text-[#ffae22] transition-all duration-300">
+                    <a href="{{ route('login') }}" class="font-medium text-[#f3274c] hover:text-[#ffae22] transition-all duration-300">
                         Login sekarang
                     </a>
                 </p>

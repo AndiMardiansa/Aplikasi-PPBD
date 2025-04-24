@@ -12,6 +12,7 @@
     <!-- Scripts -->
     <script src="https://cdn.tailwindcss.com/3.2.0"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <style>
         /* Sidebar Animation */
@@ -68,6 +69,31 @@
     <script>
         // Add animation classes to elements
         document.addEventListener('DOMContentLoaded', function() {
+            // SweetAlert2 Notification
+            @if (session('swal'))
+                Swal.fire({
+                    icon: '{{ session('swal.icon') }}',
+                    title: '{{ session('swal.title') }}',
+                    text: '{{ session('swal.text') }}',
+                    showCancelButton: {{ session('swal.showCancelButton') ? 'true' : 'false' }},
+                    confirmButtonText: '{{ session('swal.confirmButtonText') ?? 'OK' }}',
+                    cancelButtonText: '{{ session('swal.cancelButtonText') ?? 'Batal' }}',
+                    confirmButtonColor: '{{ session('swal.confirmButtonColor') ?? '#10B981' }}',
+                    cancelButtonColor: '{{ session('swal.cancelButtonColor') ?? '#6B7280' }}',
+                    customClass: @json(session('swal.customClass') ?? []),
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = '{{ route('register.ppdb') }}';
+                    } else {
+                        // Jika user klik "Nanti", hapus session swal
+                        @php session()->forget('swal'); @endphp
+                    }
+                });
+            @endif
+
             // Add sidebar class
             const sidebar = document.querySelector('.bg-[#121636]');
             if (sidebar) {

@@ -85,7 +85,7 @@
             <div class="mt-6 text-center">
                 <p class="text-sm text-gray-600">
                     Belum punya akun? 
-                    <a href="{{ route('register.show') }}" class="font-medium text-[#f3274c] hover:text-[#ffae22] transition-all duration-300">
+                    <a href="{{ route('register') }}" class="font-medium text-[#f3274c] hover:text-[#ffae22] transition-all duration-300">
                         Daftar sekarang
                     </a>
                 </p>
