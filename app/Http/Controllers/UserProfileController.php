@@ -25,7 +25,20 @@ class UserProfileController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id],
         ]);
 
-        $user->fill($validated);
+        // Update the user's profile information
+        $user->name = $validated['name'];
+        $user->email = $validated['email'];
+
+        // Check if password is being updated (all password fields are optional)
+        if ($request->filled('password')) {
+            // Only validate current_password if trying to change password
+            $request->validate([
+                'current_password' => ['required', 'current_password'],
+                'password' => ['required', 'confirmed', Password::defaults()],
+            ]);
+
+            $user->password = Hash::make($request->password);
+        }
 
         if ($user->isDirty('email')) {
             $user->email_verified_at = null;
@@ -33,20 +46,6 @@ class UserProfileController extends Controller
 
         $user->save();
 
-        return redirect()->route('user.profile.edit')->with('status', 'profile-updated');
-    }
-
-    public function updatePassword(Request $request)
-    {
-        $validated = $request->validate([
-            'current_password' => ['required', 'current_password'],
-            'password' => ['required', Password::defaults(), 'confirmed'],
-        ]);
-
-        Auth::user()->update([
-            'password' => Hash::make($validated['password']),
-        ]);
-
-        return redirect()->route('user.profile.edit')->with('status', 'password-updated');
+        return redirect()->route('user.profile.edit')->with('status', 'Profile berhasil diperbarui.');
     }
 } 

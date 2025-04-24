@@ -23,7 +23,7 @@
       </p>
       
       <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
-        <a href="{{ route('login.show') }}" class="hero-button relative overflow-hidden px-8 py-4 text-white bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 font-bold rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl">
+        <a href="{{ route('login') }}" class="hero-button relative overflow-hidden px-8 py-4 text-white bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 font-bold rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl">
           <span class="relative z-10">Daftar Sekarang</span>
           <span class="absolute inset-0 w-full h-full bg-gradient-to-r from-green-400 to-green-600 rounded-lg blur opacity-0 group-hover:opacity-70 transition duration-1000 group-hover:duration-200 animate-pulse-slow"></span>
         </a>

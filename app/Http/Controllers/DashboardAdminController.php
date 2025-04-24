@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Jurusan;
-use App\Models\PPDBRegistration;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -17,23 +17,19 @@ class DashboardAdminController extends Controller
         $totalUsers = User::count();
         
         // Hitung jumlah siswa yang mendaftar
-        $registeredStudents = PPDBRegistration::count();
+        $registeredStudents = Student::count();
         
-        // Hitung jumlah siswa yang diterima (status 'accepted')
-        $acceptedStudents = PPDBRegistration::where('status', 'accepted')->count();
+        // Hitung jumlah siswa yang diterima (status 'verified')
+        $acceptedStudents = Student::where('status', 'verified')->count();
         
-        // Hitung jumlah siswa yang sudah daftar ulang
-        // Catatan: Anda perlu menambahkan kolom 're_registered' ke tabel PPDBRegistration
-        // atau membuat tabel baru untuk daftar ulang jika belum ada
-        $reRegisteredStudents = PPDBRegistration::where('status', 'accepted')
-                                    ->where('re_registered', true)
-                                    ->count();
+        // Hitung jumlah siswa yang ditolak (status 'rejected')
+        $rejectedStudents = Student::where('status', 'rejected')->count();
 
         // Ambil semua jurusan
         $jurusans = Jurusan::all();
         
         // Hitung jumlah pendaftar per jurusan untuk grafik
-        $registrationsByMajor = PPDBRegistration::select('jurusan_id', DB::raw('count(*) as total'))
+        $registrationsByMajor = Student::select('jurusan_id', DB::raw('count(*) as total'))
                                     ->groupBy('jurusan_id')
                                     ->pluck('total', 'jurusan_id')
                                     ->toArray();
@@ -50,7 +46,7 @@ class DashboardAdminController extends Controller
             'totalUsers', 
             'registeredStudents', 
             'acceptedStudents', 
-            'reRegisteredStudents',
+            'rejectedStudents',
             'jurusanNames',
             'jurusanCounts'
         ));

@@ -34,10 +34,10 @@ class LoginController extends Controller
             
             if ($user) {
                 // Email benar, password salah
-                return redirect()->route('login.show')->withErrors('Password yang Anda masukkan salah');
+                return redirect()->route('login')->withErrors('Password yang Anda masukkan salah');
             } else {
                 // Email tidak ditemukan
-                return redirect()->route('login.show')->withErrors('Email tidak terdaftar. Silakan daftar terlebih dahulu');
+                return redirect()->route('login')->withErrors('Email tidak terdaftar. Silakan daftar terlebih dahulu');
             }
         }
     }
