@@ -4,6 +4,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PPDBController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardAdminController;
+use App\Http\Controllers\UserProfileController;
 
 Route::get('/', function () {
     return view('index');
@@ -36,9 +37,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/ppdb/register', [PPDBController::class, 'register'])->name('register.ppdb.post');
     Route::get('/ppdb/details', [PPDBController::class, 'showRegistration'])->name('ppdb.details');
     
-    // Profile routes
-    Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
-    Route::put('/profile', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
+    // User Profile routes
+    Route::get('/user/profile', [UserProfileController::class, 'edit'])->name('user.profile.edit');
+    Route::patch('/user/profile', [UserProfileController::class, 'update'])->name('user.profile.update');
+    Route::put('/user/profile/password', [UserProfileController::class, 'updatePassword'])->name('user.profile.password');
 });
 
 // Admin routes
@@ -48,7 +50,7 @@ Route::middleware(['auth'])->group(function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
     
-    // Profile routes
+    // Admin Profile routes
     Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
 });

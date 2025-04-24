@@ -1,4 +1,6 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app') --}}
+
+@extends('layouts.dashboard')
 
 @section('title', 'Detail Pendaftaran PPDB - SMK NEGERI 3 PALU')
 

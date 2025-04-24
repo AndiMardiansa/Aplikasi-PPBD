@@ -446,6 +446,8 @@
 @endpush
 
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
     let currentStep = 1;
     const totalSteps = 3;
@@ -489,18 +491,30 @@
         const stepContent = document.querySelector(`.step-content[data-step="${step}"]`);
         const requiredFields = stepContent.querySelectorAll('input[required], select[required], textarea[required]');
         let isValid = true;
+        let emptyFields = [];
 
         requiredFields.forEach(field => {
             if (!field.value.trim()) {
                 isValid = false;
                 field.classList.add('border-red-500');
+                // Get the field label
+                const label = field.previousElementSibling ? 
+                             field.previousElementSibling.textContent.trim() : 
+                             field.getAttribute('name');
+                emptyFields.push(label);
             } else {
                 field.classList.remove('border-red-500');
             }
         });
 
         if (!isValid) {
-            alert('Mohon lengkapi semua field yang wajib diisi');
+            Swal.fire({
+                title: 'Mohon Lengkapi Data',
+                // html: `Silakan lengkapi field berikut:<br><br>${emptyFields.join('<br>')}`,
+                icon: 'warning',
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#f3274c'
+            });
         }
 
         return isValid;
