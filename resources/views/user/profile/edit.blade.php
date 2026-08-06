@@ -3,18 +3,23 @@
 @section('title', 'Edit Profile')
 
 @section('content')
-<div class="flex h-screen bg-gray-100">
+<div class="flex h-screen bg-gray-100" x-data>
     <!-- Sidebar -->
     @include('layouts.user-menu')
 
     
 
     <!-- Main Content -->
-    <div class="ml-64 flex-1 flex flex-col min-h-screen">
+    <div class="md:ml-64 flex-1 flex flex-col min-h-screen">
         <!-- Top Header -->
         <header class="flex justify-between items-center p-4 bg-white border-b">
-            <div class="flex items-center">
-                <h1 class="text-2xl font-semibold text-gray-800">Edit Profile</h1>
+            <div class="flex items-center gap-2">
+                <button @click="$store.sidebar.open = true" type="button" class="md:hidden inline-flex items-center justify-center p-2 -ml-2 rounded-md text-gray-500 hover:text-gray-700 hover:bg-gray-100">
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+                <h1 class="text-lg sm:text-2xl font-semibold text-gray-800">Edit Profile</h1>
             </div>
             <div class="flex items-center">
                 <a href="{{ route('home') }}" class="inline-flex items-center px-4 py-2 bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest hover:bg-gray-300 active:bg-gray-400 focus:outline-none focus:border-gray-500 focus:ring focus:ring-gray-300 transition">

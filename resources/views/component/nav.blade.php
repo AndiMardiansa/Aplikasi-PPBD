@@ -6,32 +6,32 @@
           <div class="shrink-0 flex items-center">
               <a href="{{ route('home') }}" class="flex items-center space-x-3">
                   <img src="{{ asset('img/logosmkn3palu.png') }}" alt="Logo" class="h-12 w-auto">
-                  <div>
-                      <span class="text-2xl font-bold text-[#f3274c]">SMK NEGERI 3</span>
-                      <span class="text-2xl font-bold text-[#ffae22]">PALU</span>
+                  <div class="min-w-0">
+                      <span class="block text-lg sm:text-2xl leading-tight font-bold text-[#f3274c]">SMK NEGERI 3</span>
+                      <span class="block text-lg sm:text-2xl leading-tight font-bold text-[#ffae22]">PALU</span>
                   </div>
               </a>
           </div>
 
           <!-- Navigation Links -->
           <div class="hidden md:flex space-x-10">
-              <a href="{{ route('home') }}" 
-                  class="text-base font-medium text-gray-700 hover:text-[#f3274c] transition-all duration-300 border-b-2 border-transparent hover:border-[#f3274c] {{ request()->routeIs('home') ? 'border-[#f3274c] text-[#f3274c]' : '' }}">
+              <a href="#beranda" 
+                  class="text-base font-medium text-gray-700 hover:text-[#f3274c] transition-all duration-300 border-b-2 border-transparent hover:border-[#f3274c] {{ request()->is('/') ? 'border-[#f3274c] text-[#f3274c]' : '' }}">
                   Beranda
               </a>
-              <a href="#" 
+              <a href="#jurusan" 
                   class="text-base font-medium text-gray-700 hover:text-[#f3274c] transition-all duration-300 border-b-2 border-transparent hover:border-[#f3274c]">
                   Jurusan
               </a>
-              <a href="#" 
+              <a href="#persyaratan" 
                   class="text-base font-medium text-gray-700 hover:text-[#f3274c] transition-all duration-300 border-b-2 border-transparent hover:border-[#f3274c]">
                   Persyaratan
               </a>
-              <a href="#" 
+              <a href="#cara-daftar" 
                   class="text-base font-medium text-gray-700 hover:text-[#f3274c] transition-all duration-300 border-b-2 border-transparent hover:border-[#f3274c]">
                   Cara Daftar
               </a>
-              <a href="#" 
+              <a href="#faq" 
                   class="text-base font-medium text-gray-700 hover:text-[#f3274c] transition-all duration-300 border-b-2 border-transparent hover:border-[#f3274c]">
                   FAQ
               </a>
@@ -88,23 +88,23 @@
   <!-- Mobile menu -->
   <div :class="{'block': open, 'hidden': !open}" class="hidden md:hidden">
       <div class="px-4 pt-2 pb-3 space-y-1">
-          <a href="{{ route('home') }}" 
-              class="block py-2 text-base font-medium text-gray-700 hover:text-[#f3274c] hover:bg-gray-50 transition-all duration-300 {{ request()->routeIs('home') ? 'text-[#f3274c]' : '' }}">
+          <a href="#beranda" @click="open = false" 
+              class="block py-2 text-base font-medium text-gray-700 hover:text-[#f3274c] hover:bg-gray-50 transition-all duration-300 {{ request()->is('/') ? 'text-[#f3274c]' : '' }}">
               Beranda
           </a>
-          <a href="#" 
+          <a href="#jurusan" @click="open = false" 
               class="block py-2 text-base font-medium text-gray-700 hover:text-[#f3274c] hover:bg-gray-50 transition-all duration-300">
               Jurusan
           </a>
-          <a href="#" 
+          <a href="#persyaratan" @click="open = false" 
               class="block py-2 text-base font-medium text-gray-700 hover:text-[#f3274c] hover:bg-gray-50 transition-all duration-300">
               Persyaratan
           </a>
-          <a href="#" 
+          <a href="#cara-daftar" @click="open = false" 
               class="block py-2 text-base font-medium text-gray-700 hover:text-[#f3274c] hover:bg-gray-50 transition-all duration-300">
               Cara Daftar
           </a>
-          <a href="#" 
+          <a href="#faq" @click="open = false" 
               class="block py-2 text-base font-medium text-gray-700 hover:text-[#f3274c] hover:bg-gray-50 transition-all duration-300">
               FAQ
           </a>

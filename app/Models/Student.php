@@ -30,7 +30,8 @@ class Student extends Model
         'ijazah',
         'kartu_keluarga',
         'akte_kelahiran',
-        'status'
+        'status',
+        'daftar_ulang',
     ];
 
     public function user()
@@ -42,4 +43,4 @@ class Student extends Model
     {
         return $this->belongsTo(Jurusan::class);
     }
-} 
+}

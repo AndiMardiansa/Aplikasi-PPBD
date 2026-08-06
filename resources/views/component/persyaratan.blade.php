@@ -1,5 +1,5 @@
 <!-- Persyaratan Section -->
-<section id="persyaratan" class="py-16 bg-gray-50">
+<section id="persyaratan" class="py-16 bg-gray-50 overflow-hidden">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <!-- Section Header -->
     <div class="mb-12">

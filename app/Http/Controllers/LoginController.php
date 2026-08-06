@@ -13,7 +13,7 @@ class LoginController extends Controller
     public function loginpost(Request $request)
     {
         $request->validate([
-            'email'=>'required|email:dns',
+            'email'=>'required|email',
             'password'=>'required',
             // 'g-recaptcha-response' => 'required|captcha',
         ],[
@@ -51,7 +51,7 @@ class LoginController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email:dns|max:255|unique:users',
+            'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
         ], [
             'name.required' => 'Nama Wajib Diisi',

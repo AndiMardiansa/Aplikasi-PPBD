@@ -51,61 +51,66 @@
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    // Mobile menu toggle
+    // Mobile menu toggle (legacy markup: element IDs mobile-menu-button / mobile-menu)
     const mobileMenuButton = document.getElementById("mobile-menu-button");
     const mobileMenu = document.getElementById("mobile-menu");
-    const mobileMenuLinks = mobileMenu.querySelectorAll("a");
 
-    // Toggle menu when button is clicked
-    mobileMenuButton.addEventListener("click", function () {
-      mobileMenu.classList.toggle("active");
-      document.body.classList.toggle("menu-open");
-      
-      // Change hamburger to X
-      const bars = this.querySelectorAll('div');
-      if (mobileMenu.classList.contains('active')) {
-        bars[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-        bars[1].style.opacity = '0';
-        bars[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
-      } else {
-        bars[0].style.transform = 'none';
-        bars[1].style.opacity = '1';
-        bars[2].style.transform = 'none';
-      }
-    });
+    if (mobileMenuButton && mobileMenu) {
+      const mobileMenuLinks = mobileMenu.querySelectorAll("a");
 
-    // Close menu when a link is clicked
-    mobileMenuLinks.forEach(function (link) {
-      link.addEventListener("click", function () {
-        mobileMenu.classList.remove("active");
-        document.body.classList.remove("menu-open");
+      // Toggle menu when button is clicked
+      mobileMenuButton.addEventListener("click", function () {
+        mobileMenu.classList.toggle("active");
+        document.body.classList.toggle("menu-open");
+
+        // Change hamburger to X
+        const bars = this.querySelectorAll('div');
+        if (mobileMenu.classList.contains('active')) {
+          bars[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+          bars[1].style.opacity = '0';
+          bars[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+        } else {
+          bars[0].style.transform = 'none';
+          bars[1].style.opacity = '1';
+          bars[2].style.transform = 'none';
+        }
       });
-    });
+
+      // Close menu when a link is clicked
+      mobileMenuLinks.forEach(function (link) {
+        link.addEventListener("click", function () {
+          mobileMenu.classList.remove("active");
+          document.body.classList.remove("menu-open");
+        });
+      });
+    }
 
     // Sticky header on scroll
     const header = document.querySelector("header");
     let lastScrollTop = 0;
 
-    window.addEventListener("scroll", function () {
-      let scrollTop =
-        window.pageYOffset || document.documentElement.scrollTop;
+    if (header) {
+      window.addEventListener("scroll", function () {
+        let scrollTop =
+          window.pageYOffset || document.documentElement.scrollTop;
 
-      if (scrollTop > 50) {
-        header.classList.add("header-sticky");
+        if (scrollTop > 50) {
+          header.classList.add("header-sticky");
 
-        // Hide header when scrolling down, show when scrolling up
-        if (scrollTop > lastScrollTop) {
-          header.style.transform = "translateY(-100%)";
+          // Hide header when scrolling down, show when scrolling up
+          if (scrollTop > lastScrollTop) {
+            header.style.transform = "translateY(-100%)";
+          } else {
+            header.style.transform = "translateY(0)";
+          }
         } else {
+          header.classList.remove("header-sticky");
           header.style.transform = "translateY(0)";
         }
-      } else {
-        header.classList.remove("header-sticky");
-        header.style.transform = "translateY(0)";
-      }
 
-      lastScrollTop = scrollTop;
-    });
+        lastScrollTop = scrollTop;
+      });
+    }
 
     // Add to cart functionality
     const addToCartButtons = document.querySelectorAll(
@@ -192,22 +197,23 @@ document.addEventListener("DOMContentLoaded", function () {
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
       anchor.addEventListener("click", function (e) {
-        e.preventDefault();
-
         const targetId = this.getAttribute("href");
         if (targetId === "#") return;
 
         const targetElement = document.querySelector(targetId);
         if (targetElement) {
-          // Close mobile menu if open
-          if (mobileMenu.classList.contains("active")) {
+          e.preventDefault();
+
+          // Close legacy mobile menu if open
+          if (mobileMenu && mobileMenu.classList.contains("active")) {
             mobileMenu.classList.remove("active");
             document.body.classList.remove("menu-open");
           }
 
-          // Smooth scroll to target
+          // Smooth scroll to target, offsetting for the fixed header
+          const y = targetElement.getBoundingClientRect().top + window.pageYOffset - 80;
           window.scrollTo({
-            top: targetElement.offsetTop - 80, // Offset for header
+            top: y,
             behavior: "smooth",
           });
 

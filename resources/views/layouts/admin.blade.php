@@ -7,10 +7,14 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <!-- ApexCharts -->
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    @include('component.form-styles')
 </head>
 <body class="flex h-screen bg-gray-100">
+    <!-- Mobile overlay -->
+    <div id="adminSidebarBackdrop" class="fixed inset-0 z-30 bg-black bg-opacity-50 hidden md:hidden" onclick="toggleAdminSidebar(false)"></div>
+
     <!-- Sidebar -->
-    <div class="w-64 bg-gray-900 text-white">
+    <div id="adminSidebar" class="fixed inset-y-0 left-0 z-40 w-64 bg-gray-900 text-white flex flex-col overflow-y-auto transform -translate-x-full transition-transform duration-300 md:static md:translate-x-0">
         <div class="flex items-center p-4 border-b border-gray-800">
             <img src="{{ asset('img/logosmkn3palu.png') }}" alt="Logo" class="w-10 h-10 mr-3">
             <div>
@@ -21,49 +25,49 @@
         
         
         <nav class="mt-6">
-            <a href="{{ route('home_admin') }}" class="flex items-center px-6 py-3 {{ request()->routeIs('admin.dashboard') ? 'bg-gray-800 border-l-4 border-green-500' : 'hover:bg-gray-800' }} transition">
+            <a href="{{ route('admin.dashboard') }}" class="flex items-center px-6 py-3 {{ request()->routeIs('admin.dashboard') || request()->routeIs('home_admin') ? 'bg-gray-800 border-l-4 border-green-500' : 'hover:bg-gray-800' }} transition">
                 <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
                 </svg>
                 Beranda
             </a>
             
-            <a href="#" class="flex items-center px-6 py-3 hover:bg-gray-800 transition">
+            <a href="{{ route('admin.calon-siswa') }}" class="flex items-center px-6 py-3 {{ request()->routeIs('admin.calon-siswa*') ? 'bg-gray-800 border-l-4 border-green-500' : 'hover:bg-gray-800' }} transition">
                 <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
                 </svg>
                 Calon siswa
             </a>
             
-            <a href="#" class="flex items-center px-6 py-3 hover:bg-gray-800 transition">
+            <a href="{{ route('admin.status') }}" class="flex items-center px-6 py-3 {{ request()->routeIs('admin.status') ? 'bg-gray-800 border-l-4 border-green-500' : 'hover:bg-gray-800' }} transition">
                 <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
                 </svg>
                 Status
             </a>
             
-            <a href="#" class="flex items-center px-6 py-3 hover:bg-gray-800 transition">
+            <a href="{{ route('admin.daftar-ulang') }}" class="flex items-center px-6 py-3 {{ request()->routeIs('admin.daftar-ulang*') ? 'bg-gray-800 border-l-4 border-green-500' : 'hover:bg-gray-800' }} transition">
                 <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                 </svg>
                 Daftar ulang
             </a>
             
-            <a href="#" class="flex items-center px-6 py-3 hover:bg-gray-800 transition">
+            <a href="{{ route('admin.siswa') }}" class="flex items-center px-6 py-3 {{ request()->routeIs('admin.siswa') ? 'bg-gray-800 border-l-4 border-green-500' : 'hover:bg-gray-800' }} transition">
                 <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
                 </svg>
                 Siswa
             </a>
             
-            <a href="#" class="flex items-center px-6 py-3 hover:bg-gray-800 transition">
+            <a href="{{ route('admin.kelas.index') }}" class="flex items-center px-6 py-3 {{ request()->routeIs('admin.kelas*') ? 'bg-gray-800 border-l-4 border-green-500' : 'hover:bg-gray-800' }} transition">
                 <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
                 </svg>
                 Kelas
             </a>
             
-            <a href="#" class="flex items-center px-6 py-3 hover:bg-gray-800 transition">
+            <a href="{{ route('admin.faq.index') }}" class="flex items-center px-6 py-3 {{ request()->routeIs('admin.faq*') ? 'bg-gray-800 border-l-4 border-green-500' : 'hover:bg-gray-800' }} transition">
                 <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
@@ -80,20 +84,22 @@
     <div class="flex-1 flex flex-col overflow-hidden">
         <!-- Top Navigation -->
         <header class="flex justify-between items-center p-4 bg-white border-b">
-            <button class="text-gray-500 focus:outline-none">
+            <button onclick="toggleAdminSidebar()" class="md:hidden text-gray-500 focus:outline-none">
                 <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M4 6H20M4 12H20M4 18H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                 </svg>
             </button>
             
             <div class="flex items-center">
-                <span id="current-time" class="mr-2 text-gray-700 font-medium">{{ date('H:i:s') }}</span>
-                <span class="mr-4 text-gray-700">|</span>
-                <span id="current-date" class="mr-8 text-gray-700">{{ date('l, d F Y') }}</span>
+                <div class="hidden sm:flex items-center">
+                    <span id="current-time" class="mr-2 text-gray-700 font-medium">{{ date('H:i:s') }}</span>
+                    <span class="mr-4 text-gray-700">|</span>
+                    <span id="current-date" class="mr-8 text-gray-700">{{ date('l, d F Y') }}</span>
+                </div>
                 
                 <div class="relative">
                     <button onclick="toggleDropdown()" class="flex items-center focus:outline-none">
-                        <span class="mr-2 text-gray-700">{{ Auth::user()->name }}</span>
+                        <span class="hidden sm:inline mr-2 text-gray-700">{{ Auth::user()->name }}</span>
                         <svg class="h-4 w-4 text-gray-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M19 9L12 16L5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                         </svg>
@@ -129,12 +135,35 @@
         
         <!-- Content -->
         <main class="flex-1 overflow-y-auto p-4 bg-gray-100">
+            @if (session('success'))
+            <div class="mb-4 px-4 py-3 rounded-md bg-green-100 border border-green-400 text-green-700 flex items-center justify-between">
+                <span>{{ session('success') }}</span>
+                <button onclick="this.parentElement.remove()" class="text-green-700 hover:text-green-900">&times;</button>
+            </div>
+            @endif
+            @if (session('error'))
+            <div class="mb-4 px-4 py-3 rounded-md bg-red-100 border border-red-400 text-red-700 flex items-center justify-between">
+                <span>{{ session('error') }}</span>
+                <button onclick="this.parentElement.remove()" class="text-red-700 hover:text-red-900">&times;</button>
+            </div>
+            @endif
             @yield('content')
         </main>
     </div>
     
     <!-- Scripts -->
     <script>
+        // Sidebar toggle (mobile)
+        function toggleAdminSidebar(force) {
+            const sidebar = document.getElementById('adminSidebar');
+            const backdrop = document.getElementById('adminSidebarBackdrop');
+            if (!sidebar) return;
+            const willOpen = force !== undefined ? force : sidebar.classList.contains('-translate-x-full');
+            sidebar.classList.toggle('-translate-x-full', !willOpen);
+            sidebar.classList.toggle('translate-x-0', willOpen);
+            if (backdrop) backdrop.classList.toggle('hidden', !willOpen);
+        }
+
         // Dropdown toggle function
         function toggleDropdown() {
             const dropdown = document.getElementById('profileDropdown');

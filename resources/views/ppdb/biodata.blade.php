@@ -3,19 +3,26 @@
 @section('title', 'Biodata Siswa')
 
 @section('content')
-<div class="flex h-screen bg-gray-100">
+<div class="flex h-screen bg-gray-100" x-data>
     <!-- Include User Menu -->
     @include('layouts.user-menu')
 
     <!-- Main Content -->
-    <div class="ml-64 flex-1 flex flex-col min-h-screen">
+    <div class="md:ml-64 flex-1 flex flex-col min-h-screen">
         <!-- Top Header -->
         <header class="bg-white shadow-sm z-10">
-            <div class="flex items-center justify-between h-16 px-6">
-                <h1 class="text-2xl font-semibold text-gray-800">Biodata Calon Siswa</h1>
-                <div class="flex items-center">
+            <div class="flex items-center justify-between h-16 px-4 sm:px-6">
+                <div class="flex items-center gap-2 min-w-0">
+                    <button @click="$store.sidebar.open = true" type="button" class="md:hidden inline-flex items-center justify-center p-2 -ml-2 rounded-md text-gray-500 hover:text-gray-700 hover:bg-gray-100">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                    <h1 class="text-base sm:text-2xl font-semibold text-gray-800 truncate">Biodata Calon Siswa</h1>
+                </div>
+                <div class="flex items-center flex-shrink-0">
                     <div class="ml-4 relative flex items-center">
-                        <div class="text-right mr-4">
+                        <div class="hidden sm:block text-right mr-4">
                             <p class="text-sm font-medium text-gray-900">{{ Auth::user()->name }}</p>
                             <p class="text-xs text-gray-500">{{ Auth::user()->email }}</p>
                         </div>
@@ -71,7 +78,7 @@
         </header>
 
         <!-- Content -->
-        <main class="flex-1 overflow-y-auto bg-gray-100 p-6">
+        <main class="flex-1 overflow-y-auto bg-gray-100 p-4 sm:p-6">
             <div class="max-w-7xl mx-auto">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <!-- Biodata Siswa -->
@@ -79,9 +86,15 @@
                         <div class="bg-gradient-to-r from-blue-500 to-indigo-600 p-4">
                             <div class="flex justify-center">
                                 <div class="relative">
+                                    @if($registration->pas_foto)
+                                    <img src="{{ route('ppdb.download', ['type' => 'pas_foto', 'filename' => basename($registration->pas_foto)]) }}" 
+                                         alt="Pas Foto" 
+                                         class="rounded-full w-32 h-32 border-4 border-white shadow-lg object-cover">
+                                    @else
                                     <img src="https://ui-avatars.com/api/?name={{ urlencode($registration->nama_lengkap) }}&size=150&background=ffffff&color=4f46e5" 
                                          alt="Pas Foto" 
                                          class="rounded-full w-32 h-32 border-4 border-white shadow-lg">
+                                    @endif
                                 </div>
                             </div>
                             <h2 class="text-white text-center mt-4 text-xl font-semibold">{{ $registration->nama_lengkap }}</h2>
@@ -179,14 +192,18 @@
                                                 </div>
                                                 <div class="flex-1 min-w-0">
                                                     <p class="text-sm font-medium text-gray-900">Pas Foto</p>
-                                                    <p class="text-xs text-gray-500 truncate">{{ basename($registration->pas_foto) }}</p>
+                                                    <p class="text-xs text-gray-500 truncate">{{ $registration->pas_foto ? basename($registration->pas_foto) : '-' }}</p>
                                                 </div>
                                             </div>
                                             <div class="ml-4">
-                                                <a href="{{ url('storage/'.$registration->pas_foto) }}" target="_blank" 
+                                                @if($registration->pas_foto)
+                                                <a href="{{ route('ppdb.download', ['type' => 'pas_foto', 'filename' => basename($registration->pas_foto)]) }}" target="_blank" 
                                                    class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                                                     Lihat
                                                 </a>
+                                                @else
+                                                <span class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-500 bg-gray-100">Belum Diunggah</span>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -202,14 +219,18 @@
                                                 </div>
                                                 <div class="flex-1 min-w-0">
                                                     <p class="text-sm font-medium text-gray-900">Surat Keterangan Lulus</p>
-                                                    <p class="text-xs text-gray-500 truncate">{{ basename($registration->surat_lulus) }}</p>
+                                                    <p class="text-xs text-gray-500 truncate">{{ $registration->surat_lulus ? basename($registration->surat_lulus) : '-' }}</p>
                                                 </div>
                                             </div>
                                             <div class="ml-4">
-                                                <a href="{{ url('storage/'.$registration->surat_lulus) }}" target="_blank" 
+                                                @if($registration->surat_lulus)
+                                                <a href="{{ route('ppdb.download', ['type' => 'surat_lulus', 'filename' => basename($registration->surat_lulus)]) }}" target="_blank" 
                                                    class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
                                                     Lihat
                                                 </a>
+                                                @else
+                                                <span class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-500 bg-gray-100">Belum Diunggah</span>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -225,14 +246,18 @@
                                                 </div>
                                                 <div class="flex-1 min-w-0">
                                                     <p class="text-sm font-medium text-gray-900">Ijazah</p>
-                                                    <p class="text-xs text-gray-500 truncate">{{ basename($registration->ijazah) }}</p>
+                                                    <p class="text-xs text-gray-500 truncate">{{ $registration->ijazah ? basename($registration->ijazah) : '-' }}</p>
                                                 </div>
                                             </div>
                                             <div class="ml-4">
-                                                <a href="{{ url('storage/'.$registration->ijazah) }}" target="_blank" 
+                                                @if($registration->ijazah)
+                                                <a href="{{ route('ppdb.download', ['type' => 'ijazah', 'filename' => basename($registration->ijazah)]) }}" target="_blank" 
                                                    class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
                                                     Lihat
                                                 </a>
+                                                @else
+                                                <span class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-500 bg-gray-100">Belum Diunggah</span>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -248,14 +273,18 @@
                                                 </div>
                                                 <div class="flex-1 min-w-0">
                                                     <p class="text-sm font-medium text-gray-900">Kartu Keluarga</p>
-                                                    <p class="text-xs text-gray-500 truncate">{{ basename($registration->kartu_keluarga) }}</p>
+                                                    <p class="text-xs text-gray-500 truncate">{{ $registration->kartu_keluarga ? basename($registration->kartu_keluarga) : '-' }}</p>
                                                 </div>
                                             </div>
                                             <div class="ml-4">
-                                                <a href="{{ url('storage/'.$registration->kartu_keluarga) }}" target="_blank" 
+                                                @if($registration->kartu_keluarga)
+                                                <a href="{{ route('ppdb.download', ['type' => 'kartu_keluarga', 'filename' => basename($registration->kartu_keluarga)]) }}" target="_blank" 
                                                    class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
                                                     Lihat
                                                 </a>
+                                                @else
+                                                <span class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-500 bg-gray-100">Belum Diunggah</span>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -271,14 +300,18 @@
                                                 </div>
                                                 <div class="flex-1 min-w-0">
                                                     <p class="text-sm font-medium text-gray-900">Akte Kelahiran</p>
-                                                    <p class="text-xs text-gray-500 truncate">{{ basename($registration->akte_kelahiran) }}</p>
+                                                    <p class="text-xs text-gray-500 truncate">{{ $registration->akte_kelahiran ? basename($registration->akte_kelahiran) : '-' }}</p>
                                                 </div>
                                             </div>
                                             <div class="ml-4">
-                                                <a href="{{ url('storage/'.$registration->akte_kelahiran) }}" target="_blank" 
+                                                @if($registration->akte_kelahiran)
+                                                <a href="{{ route('ppdb.download', ['type' => 'akte_kelahiran', 'filename' => basename($registration->akte_kelahiran)]) }}" target="_blank" 
                                                    class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-pink-600 hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500">
                                                     Lihat
                                                 </a>
+                                                @else
+                                                <span class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-500 bg-gray-100">Belum Diunggah</span>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

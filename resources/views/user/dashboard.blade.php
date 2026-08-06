@@ -3,19 +3,26 @@
 @section('title', 'Dashboard PPDB - SMK NEGERI 3 PALU')
 
 @section('content')
-<div class="flex h-screen bg-gray-100">
+<div class="flex h-screen bg-gray-100" x-data>
     <!-- Include User Menu -->
     @include('layouts.user-menu')
 
     <!-- Main Content -->
-    <div class="ml-64 flex-1 flex flex-col min-h-screen">
+    <div class="md:ml-64 flex-1 flex flex-col min-h-screen">
         <!-- Top Header -->
         <header class="bg-white shadow-sm z-10">
-            <div class="flex items-center justify-between h-16 px-6">
-                <h1 class="text-2xl font-semibold text-gray-800">Calon Peserta Didik Baru SMK NEGERI 3 PALU</h1>
-                <div class="flex items-center">
+            <div class="flex items-center justify-between h-16 px-4 sm:px-6">
+                <div class="flex items-center gap-2 min-w-0">
+                    <button @click="$store.sidebar.open = true" type="button" class="md:hidden inline-flex items-center justify-center p-2 -ml-2 rounded-md text-gray-500 hover:text-gray-700 hover:bg-gray-100">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                    <h1 class="text-base sm:text-2xl font-semibold text-gray-800 truncate">Calon Peserta Didik Baru SMK NEGERI 3 PALU</h1>
+                </div>
+                <div class="flex items-center flex-shrink-0">
                     <div class="ml-4 relative flex items-center">
-                        <div class="text-right mr-4">
+                        <div class="hidden sm:block text-right mr-4">
                             <p class="text-sm font-medium text-gray-900">{{ Auth::user()->name }}</p>
                             <p class="text-xs text-gray-500">{{ Auth::user()->email }}</p>
                         </div>
@@ -71,7 +78,7 @@
         </header>
 
         <!-- Content -->
-        <main class="flex-1 overflow-y-auto bg-gray-100 p-6">
+        <main class="flex-1 overflow-y-auto bg-gray-100 p-4 sm:p-6">
             <div class="max-w-7xl mx-auto">
                 <h2 class="text-xl font-semibold mb-6 text-gray-700">Selamat Datang, {{ Auth::user()->name }}</h2>
                 

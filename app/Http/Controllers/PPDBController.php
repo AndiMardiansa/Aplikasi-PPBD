@@ -239,7 +239,8 @@ class PPDBController extends Controller
             ]);
         }
 
-        $registrations = Student::with(['user', 'jurusan'])
+        $registrations = Student::with('jurusan:id,nama_jurusan')
+            ->select('id', 'nama_lengkap', 'jenis_kelamin', 'tempat_lahir', 'tanggal_lahir', 'asal_sekolah', 'jurusan_id', 'status')
             ->orderBy('created_at', 'desc')
             ->get();
 

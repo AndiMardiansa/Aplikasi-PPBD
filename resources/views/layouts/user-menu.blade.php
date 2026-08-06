@@ -1,5 +1,11 @@
+<!-- Mobile overlay -->
+<div x-cloak class="fixed inset-0 z-30 bg-black bg-opacity-50 md:hidden transition-opacity duration-300"
+     :class="$store.sidebar.open ? 'opacity-100' : 'opacity-0 pointer-events-none'"
+     @click="$store.sidebar.open = false"></div>
+
 <!-- Sidebar -->
-<div class="fixed w-64 h-screen bg-[#121636] text-white flex flex-col">
+<div class="fixed inset-y-0 left-0 z-40 w-64 bg-[#121636] text-white flex flex-col transition-transform duration-300 md:translate-x-0"
+     :class="$store.sidebar.open ? 'translate-x-0' : '-translate-x-full'">
     <!-- Logo -->
     <div class="p-4 flex items-center border-b border-gray-700">
         <div class="mr-3">
