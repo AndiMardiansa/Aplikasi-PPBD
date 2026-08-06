@@ -23,16 +23,16 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(): void
-    {
-        Schema::table('ppdb_registrations', function (Blueprint $table) {
-            $table->dropColumn([
-                'pas_foto',
-                'surat_lulus',
-                'ijazah',
-                'kartu_keluarga',
-                'akte_kelahiran'
-            ]);
-        });
-    }
+    // public function down(): void
+    // {
+    //     Schema::table('ppdb_registrations', function (Blueprint $table) {
+    //         $table->dropColumn([
+    //             'pas_foto',
+    //             'surat_lulus',
+    //             'ijazah',
+    //             'kartu_keluarga',
+    //             'akte_kelahiran'
+    //         ]);
+    //     });
+    // }
 }; 
