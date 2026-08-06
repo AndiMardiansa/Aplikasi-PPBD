@@ -1,66 +1,163 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<div align="center">
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# PPDB SMK Negeri 3 Palu
 
-## About Laravel
+Aplikasi **Penerimaan Peserta Didik Baru (PPDB)** online untuk SMK Negeri 3 Palu, dibangun dengan Laravel 12.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+![Laravel 12](https://img.shields.io/badge/Laravel-12-red) ![PHP ^8.2](https://img.shields.io/badge/PHP-%5E8.2-blue) ![MySQL 8](https://img.shields.io/badge/MySQL-8-orange)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+</div>
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Deskripsi
 
-## Learning Laravel
+Aplikasi PPDB online yang menangani pendaftaran calon peserta didik baru secara digital:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- Halaman utama (landing page) berisi info jurusan, persyaratan, cara daftar, dan FAQ.
+- Pendaftaran online dengan unggah berkas (pas foto, SKL, ijazah, kartu keluarga, akte kelahiran).
+- Dashboard siswa: status pendaftaran, biodata, kelengkapan dokumen, daftar ulang.
+- Panel admin: dashboard statistik, verifikasi calon siswa, manajemen status, daftar ulang, data siswa diterima, manajemen kelas, dan FAQ.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Teknologi yang digunakan:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- **Backend:** Laravel 12, PHP ^8.2, MySQL 8
+- **Frontend:** Blade, Tailwind CSS v3 (CDN) + Alpine.js untuk halaman publik/siswa, Tailwind v2 (CDN) untuk panel admin
+- **Auth:** buatan sendiri (tanpa Breeze/Fortify)
+- **Testing:** PHPUnit
 
-## Laravel Sponsors
+## Fitur
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Publik / Siswa
 
-### Premium Partners
+| Fitur | Keterangan |
+| --- | --- |
+| Landing page | Hero, jurusan, persyaratan, cara daftar, FAQ (data dari DB) |
+| Registrasi & Login | Registrasi akun dan login pengguna (tanpa email:dns) |
+| Pendaftaran PPDB | Formulir data diri + unggah 5 dokumen, pilihan jurusan |
+| Status Pendaftaran | `pending` / `verified` / `rejected` |
+| Biodata | Data lengkap + tombol "Lihat" untuk setiap dokumen |
+| Daftar Ulang | Halaman status daftar ulang siswa |
+| Profil | Ubah nama/email/password pengguna |
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### Admin
 
-## Contributing
+| Menu | Keterangan |
+| --- | --- |
+| Beranda | Dashboard statistik + grafik pendaftaran per jurusan dan status |
+| Calon siswa | Daftar pendaftar (filter status/jurusan/pencarian), detail dokumen, aksi terima/tolak |
+| Status | Ubah status pendaftaran per siswa |
+| Daftar ulang | Ubah status daftar ulang (`pending` / `paid` / `completed`) |
+| Siswa | Daftar siswa yang sudah diterima (status `verified`) |
+| Kelas | CRUD kelas (nama kelas, jurusan, kuota) |
+| FAQ | CRUD FAQ yang tampil di landing page |
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Persyaratan
 
-## Code of Conduct
+- PHP ^8.2
+- Composer
+- MySQL 8 (atau versi lain yang didukung)
+- Node.js (hanya jika memakai Vite; halaman aplikasi memakai CDN Tailwind)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Instalasi
 
-## Security Vulnerabilities
+1. Clone repositori:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+   ```bash
+   git clone <url-repo> Aplikasi-PPBD
+   cd Aplikasi-PPBD
+   ```
 
-## License
+2. Install dependensi:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+   ```bash
+   composer install
+   npm install
+   ```
+
+3. Salin `.env` dan generate key:
+
+   ```bash
+   copy .env.example .env   # Windows
+   # atau: cp .env.example .env
+   php artisan key:generate
+   ```
+
+4. Konfigurasi database pada `.env`:
+
+   ```dotenv
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=ppdb_smkn3palu
+   DB_USERNAME=root
+   DB_PASSWORD=
+   ```
+
+5. Jalankan migrasi dan seeder:
+
+   ```bash
+   php artisan migrate --seed
+   ```
+
+6. Jalankan server:
+
+   ```bash
+   php artisan serve
+   ```
+
+   Akses aplikasi di `http://127.0.0.1:8000`.
+
+## Akun Default
+
+Seeder membuat akun admin dan 12 jurusan plus FAQ default:
+
+| Role | Email | Password |
+| --- | --- | --- |
+| Admin | `admin@gmail.com` | `password` |
+
+> Pengguna biasa dibuat melalui halaman Registrasi. Semua akun baru berperan `user`.
+
+## Struktur Utama
+
+```
+app/
+├── Http/Controllers/
+│   ├── LoginController.php        # Auth (login/register/logout)
+│   ├── PPDBController.php         # Flow pendaftaran + dashboard siswa + download dokumen
+│   ├── DashboardAdminController.php # Dashboard admin
+│   └── Admin/AdminController.php  # Menu admin (calon siswa, status, daftar ulang, siswa, kelas, FAQ)
+├── Models/
+│   ├── Student.php                # Data pendaftar (store aktif)
+│   ├── Jurusan.php
+│   ├── User.php
+│   ├── Kelas.php                  # Manajemen kelas
+│   └── Faq.php                    # FAQ landing page
+resources/views/
+├── index.blade.php                # Landing page
+├── layouts/                       # layout publik, user, admin
+├── auth/                          # login & register
+├── user/                          # dashboard & profil siswa
+├── ppdb/                          # register, biodata, details, calon-siswa, daftar-ulang
+├── admin/                         # dashboard, calon-siswa, status, daftar-ulang, siswa, kelas, faq
+└── component/                     # bagian landing page (nav, hero, program, faq, dll)
+routes/web.php                     # Semua route aplikasi
+```
+
+## Catatan Penting
+
+- **Unggahan dokumen** disimpan di `storage/app/public/{pas_foto,surat_lulus,ijazah,kartu_keluarga,akte_kelahiran}` dan **tidak dapat diakses langsung** melalui `/storage/...` (tidak ada symlink `public/storage`). Berkas hanya dapat dilihat melalui route `GET /ppdb/download/{type}/{filename}` (`ppdb.download`, wajib login). Kolom dokumen pada `students` bisa bernilai `NULL` jika upload tidak lengkap.
+- **Status pendaftaran** siswa: `pending` / `verified` / `rejected` (bukan `accepted`).
+- **Styling** memakai Tailwind CDN; `npm run build` hanya berpengaruh ke halaman `welcome` saja, bukan halaman aplikasi.
+- `home.blade.php` dan `database/database.sqlite` merupakan sisa kode/data lama yang tidak dipakai.
+
+## Testing & Style
+
+```bash
+php artisan test            # Jalankan test
+vendor/bin/pint             # Format/style kode (Laravel Pint)
+```
+
+> phpunit.xml tidak menetapkan database terpisah — test memakai database MySQL yang dikonfigurasi di `.env`. Jalankan test terhadap database uji, bukan database produksi.
+
+## Lisensi
+
+Proyek ini dikembangkan untuk keperluan PPDB SMK Negeri 3 Palu.
