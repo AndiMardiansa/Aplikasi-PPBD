@@ -28,27 +28,27 @@ Teknologi yang digunakan:
 
 ### Publik / Siswa
 
-| Fitur | Keterangan |
-| --- | --- |
-| Landing page | Hero, jurusan, persyaratan, cara daftar, FAQ (data dari DB) |
-| Registrasi & Login | Registrasi akun dan login pengguna (tanpa email:dns) |
-| Pendaftaran PPDB | Formulir data diri + unggah 5 dokumen, pilihan jurusan |
-| Status Pendaftaran | `pending` / `verified` / `rejected` |
-| Biodata | Data lengkap + tombol "Lihat" untuk setiap dokumen |
-| Daftar Ulang | Halaman status daftar ulang siswa |
-| Profil | Ubah nama/email/password pengguna |
+| Fitur              | Keterangan                                                  |
+| ------------------ | ----------------------------------------------------------- |
+| Landing page       | Hero, jurusan, persyaratan, cara daftar, FAQ (data dari DB) |
+| Registrasi & Login | Registrasi akun dan login pengguna (tanpa email:dns)        |
+| Pendaftaran PPDB   | Formulir data diri + unggah 5 dokumen, pilihan jurusan      |
+| Status Pendaftaran | `pending` / `verified` / `rejected`                         |
+| Biodata            | Data lengkap + tombol "Lihat" untuk setiap dokumen          |
+| Daftar Ulang       | Halaman status daftar ulang siswa                           |
+| Profil             | Ubah nama/email/password pengguna                           |
 
 ### Admin
 
-| Menu | Keterangan |
-| --- | --- |
-| Beranda | Dashboard statistik + grafik pendaftaran per jurusan dan status |
-| Calon siswa | Daftar pendaftar (filter status/jurusan/pencarian), detail dokumen, aksi terima/tolak |
-| Status | Ubah status pendaftaran per siswa |
-| Daftar ulang | Ubah status daftar ulang (`pending` / `paid` / `completed`) |
-| Siswa | Daftar siswa yang sudah diterima (status `verified`) |
-| Kelas | CRUD kelas (nama kelas, jurusan, kuota) |
-| FAQ | CRUD FAQ yang tampil di landing page |
+| Menu         | Keterangan                                                                            |
+| ------------ | ------------------------------------------------------------------------------------- |
+| Beranda      | Dashboard statistik + grafik pendaftaran per jurusan dan status                       |
+| Calon siswa  | Daftar pendaftar (filter status/jurusan/pencarian), detail dokumen, aksi terima/tolak |
+| Status       | Ubah status pendaftaran per siswa                                                     |
+| Daftar ulang | Ubah status daftar ulang (`pending` / `paid` / `completed`)                           |
+| Siswa        | Daftar siswa yang sudah diterima (status `verified`)                                  |
+| Kelas        | CRUD kelas (nama kelas, jurusan, kuota)                                               |
+| FAQ          | CRUD FAQ yang tampil di landing page                                                  |
 
 ## Persyaratan
 
@@ -61,57 +61,57 @@ Teknologi yang digunakan:
 
 1. Clone repositori:
 
-   ```bash
-   git clone <url-repo> Aplikasi-PPBD
-   cd Aplikasi-PPBD
-   ```
+    ```bash
+    git clone <url-repo> Aplikasi-PPBD
+    cd Aplikasi-PPBD
+    ```
 
 2. Install dependensi:
 
-   ```bash
-   composer install
-   npm install
-   ```
+    ```bash
+    composer install
+    npm install
+    ```
 
 3. Salin `.env` dan generate key:
 
-   ```bash
-   copy .env.example .env   # Windows
-   # atau: cp .env.example .env
-   php artisan key:generate
-   ```
+    ```bash
+    copy .env.example .env   # Windows
+    # atau: cp .env.example .env
+    php artisan key:generate
+    ```
 
 4. Konfigurasi database pada `.env`:
 
-   ```dotenv
-   DB_CONNECTION=mysql
-   DB_HOST=127.0.0.1
-   DB_PORT=3306
-   DB_DATABASE=ppdb_smkn3palu
-   DB_USERNAME=root
-   DB_PASSWORD=
-   ```
+    ```dotenv
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=ppdb_smkn3palu
+    DB_USERNAME=root
+    DB_PASSWORD=
+    ```
 
 5. Jalankan migrasi dan seeder:
 
-   ```bash
-   php artisan migrate --seed
-   ```
+    ```bash
+    php artisan migrate --seed
+    ```
 
 6. Jalankan server:
 
-   ```bash
-   php artisan serve
-   ```
+    ```bash
+    php artisan serve
+    ```
 
-   Akses aplikasi di `http://127.0.0.1:8000`.
+    Akses aplikasi di `http://127.0.0.1:8000`.
 
 ## Akun Default
 
 Seeder membuat akun admin dan 12 jurusan plus FAQ default:
 
-| Role | Email | Password |
-| --- | --- | --- |
+| Role  | Email             | Password   |
+| ----- | ----------------- | ---------- |
 | Admin | `admin@gmail.com` | `password` |
 
 > Pengguna biasa dibuat melalui halaman Registrasi. Semua akun baru berperan `user`.
@@ -160,4 +160,4 @@ vendor/bin/pint             # Format/style kode (Laravel Pint)
 
 ## Lisensi
 
-Proyek ini dikembangkan untuk keperluan PPDB SMK Negeri 3 Palu.
+Proyek ini dikembangkan oleh Andi Mardiansa untuk keperluan PPDB SMK Negeri 3 Palu.
