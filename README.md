@@ -6,6 +6,8 @@ Aplikasi **Penerimaan Peserta Didik Baru (PPDB)** online untuk SMK Negeri 3 Palu
 
 ![Laravel 12](https://img.shields.io/badge/Laravel-12-red) ![PHP ^8.2](https://img.shields.io/badge/PHP-%5E8.2-blue) ![MySQL 8](https://img.shields.io/badge/MySQL-8-orange)
 
+> Dibangun oleh [Andi Mardiansa](https://github.com/AndiMardiansa) — Mahasiswa Informatika UAD & Asisten Praktikum Algoritma Pemrograman.
+
 </div>
 
 ## Deskripsi
@@ -62,7 +64,7 @@ Teknologi yang digunakan:
 1. Clone repositori:
 
     ```bash
-    git clone <url-repo> Aplikasi-PPBD
+    git clone https://github.com/AndiMardiansa/Aplikasi-PPBD.git Aplikasi-PPBD
     cd Aplikasi-PPBD
     ```
 
